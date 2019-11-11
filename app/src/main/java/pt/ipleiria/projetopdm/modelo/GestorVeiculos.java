@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import androidx.annotation.NonNull;
+
 public class GestorVeiculos implements Serializable {
 
     private ArrayList<Veiculo> veiculos = new ArrayList<>();
@@ -39,7 +41,12 @@ public class GestorVeiculos implements Serializable {
         veiculos.remove(pos);
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return
+    }
 
 
-    //FAZER TO STRING
+//FAZER TO STRING
 }
