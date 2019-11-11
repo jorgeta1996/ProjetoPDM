@@ -44,9 +44,10 @@ public class GestorVeiculos implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < veiculos.size(); i++) {
+            str.append(veiculos.get(i)).append("\n");
+        }
+        return str.toString();
     }
-
-
-//FAZER TO STRING
 }
