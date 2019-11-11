@@ -5,4 +5,7 @@
     <string name="licensePlateString">Matrícula</string>
     <string name="SearchVehicleString">Procurar Veículo</string>
     <string name="VehiclesNotFoundString">Veículos não encontrados</string>
+    <string name="textViewOwner">Proprietário</string>
+    <string name="editTextOwner">Nome do Proprietário</string>
+    <string name="category">Categoria</string>
 </resources>
