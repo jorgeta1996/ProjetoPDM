@@ -20,6 +20,19 @@
         android:inputType="textPersonName"
         android:importantForAutofill="no" />
 
+    <TextView
+        android:id="@+id/textViewCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/country"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinnerCountries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,12 +48,6 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
         <EditText
             android:id="@+id/editTextPlate"
             android:layout_width="0dp"
@@ -48,23 +55,20 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/hintMatricula"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
-            android:textAlignment="textStart"
-            android:importantForAutofill="no" />
+            android:textAlignment="textStart" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textViewCategory"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/category"
             android:textSize="24sp"
             android:textStyle="bold" />

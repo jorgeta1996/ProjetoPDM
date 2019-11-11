@@ -8,4 +8,5 @@
     <string name="textViewOwner">Proprietário</string>
     <string name="editTextOwner">Nome do Proprietário</string>
     <string name="category">Categoria</string>
+    <string name="country">País</string>
 </resources>
