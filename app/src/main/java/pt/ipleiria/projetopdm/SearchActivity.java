@@ -31,7 +31,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
 
         Intent i = getIntent();
-      //  gestorVeiculos = (GestorVeiculos)i.getSerializableExtra(MainActivity.);
         listViewV =  findViewById(R.id.listview_searchActivity);
         listViewV.setOnItemClickListener(this);
 
