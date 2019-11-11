@@ -12,14 +12,16 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
     private String pathPhoto;
     private String proprietario;
     private String cor;
+    private String categoria;
 
-    public Veiculo (String matricula,String modelo, String marca, String pathPhoto, String proprietario, String cor){
-        this.matricula = matricula;
-        this.modelo = modelo;
+    public Veiculo (String marca,String modelo, String matricula, String pathPhoto, String proprietario, String cor, String categoria){
         this.marca = marca;
+        this.modelo = modelo;
+        this.matricula = matricula;
         this.pathPhoto = pathPhoto;
         this.proprietario = proprietario;
         this.cor = cor;
+        this.categoria = categoria;
     }
 
 
@@ -52,9 +54,13 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
         return cor;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
     @NonNull
     @Override
     public String toString() {
-        return ;
+        return matricula + "\n" + marca + ">" + modelo;
     }
 }
