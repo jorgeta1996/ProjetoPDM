@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SearchActivity">
+
+    <TextView
+        android:id="@+id/asdfafafasfasfasf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/SearchVehicleString" />
+
+    <EditText
+        android:id="@+id/editText_searchMatricula"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/hintMatricula"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/ButtonProcurarPorMatricula"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickProcurar"
+        android:text="@string/searchString" />
+
+    <ListView
+        android:id="@+id/listview_searchActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

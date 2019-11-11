@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">ProjetoPDM</string>
-    
+
     <string-array name="classes">
         <item>Class A</item>
         <item>Class B</item>
         <item>Class C</item>
         <item>Class D</item>
     </string-array>
+    <string name="searchString">Search</string>
+    <string name="licensePlateString">License Plate</string>
+    <string name="hintMatricula" translatable="false">00AA00</string>
+    <string name="SearchVehicleString">Search Vehicle</string>
+    <string name="VehiclesNotFoundString">Vehicles not found</string>
 </resources>

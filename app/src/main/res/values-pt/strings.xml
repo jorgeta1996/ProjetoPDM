@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ProjetoPDM</string>
+    <string name="searchString">Procurar</string>
+    <string name="licensePlateString">Matrícula</string>
+    <string name="SearchVehicleString">Procurar Veículo</string>
+    <string name="VehiclesNotFoundString">Veículos não encontrados</string>
 </resources>
