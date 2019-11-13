@@ -9,4 +9,6 @@
     <string name="editTextOwner">Nome do Proprietário</string>
     <string name="category">Categoria</string>
     <string name="country">País</string>
+    <string name="textView_Make">Marca</string>
+    <string name="textview_model">Modelo</string>
 </resources>
