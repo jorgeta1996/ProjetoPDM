@@ -13,4 +13,7 @@
     <string name="textview_model">Modelo</string>
     <string name="class_image">Imagem da Classe</string>
     <string name="add">Adicionar</string>
+    <string name="textViewSpinnerDialog">Selecione ou Procure Itens</string>
+    <string name="textViewclose">Fechar</string>
+    <string name="spinnerDialogTitle">Selecione Itens</string>
 </resources>

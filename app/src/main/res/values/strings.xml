@@ -199,7 +199,7 @@
         <item>ZA,  South Africa</item>
         <item>ZW,  Zimbabwe</item>
     </string-array>
-    <string name="textView_Make">Make</string>
+    <string name="textView_Make">Brand</string>
     <string-array name="makers_cars">
         <item> </item>
         <item>Alfa Romeo</item>
@@ -386,4 +386,7 @@
     <string name="textview_model">Model</string>
     <string name="class_image">Class Image</string>
     <string name="add">Add</string>
+    <string name="textViewSpinnerDialog">Select or Search Items</string>
+    <string name="textViewclose">Close</string>
+    <string name="spinnerDialogTitle">Select Items</string>
 </resources>
