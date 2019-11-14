@@ -258,20 +258,17 @@
         <item>Vauxhall</item>
         <item>Volvo</item>
         <item>VW</item>
-        <item>Outra/Other</item>
     </string-array>
 
 
     <string-array name="listaMotas">
         <item>Adly</item>
         <item>Aeon</item>
-        <item>Agusta</item>
         <item>Aixam</item>
         <item>AJP</item>
         <item>Am</item>
         <item>Aprilia</item>
         <item>Arctic</item>
-        <item>Asia</item>
         <item>Bajaj</item>
         <item>Baodiao</item>
         <item>Barossa</item>
@@ -302,7 +299,6 @@
         <item>Dnepr</item>
         <item>Ducati</item>
         <item>Eco</item>
-        <item>emax</item>
         <item>Enfield</item>
         <item>ETon</item>
         <item>Explorer</item>
@@ -316,14 +312,11 @@
         <item>Hercules</item>
         <item>Hero</item>
         <item>Honda</item>
-        <item>Honda</item>
         <item>Husaberg</item>
         <item>Husqvarna</item>
         <item>Hyosung</item>
         <item>Ideal</item>
-        <item>India</item>
         <item>Italjet</item>
-        <item>Jawa</item>
         <item>Jawa</item>
         <item>Jiang</item>
         <item>JRD</item>
@@ -337,7 +330,6 @@
         <item>Laverda</item>
         <item>Lifan</item>
         <item>Linhai</item>
-        <item>listada</item>
         <item>LML</item>
         <item>Macal</item>
         <item>Maico</item>
@@ -347,17 +339,11 @@
         <item>Montesa</item>
         <item>Monto</item>
         <item>Morini</item>
-        <item>Moto</item>
-        <item>Moto</item>
-        <item>Motor</item>
         <item>Motorradtechnik</item>
-        <item>Motors</item>
-        <item>MV</item>
+        <item>MV Agusta India</item>
         <item>MZ</item>
-        <item>não</item>
         <item>Norton</item>
         <item>NSU</item>
-        <item>Outra</item>
         <item>Pegasus</item>
         <item>Peugeot</item>
         <item>PGO</item>
@@ -390,7 +376,6 @@
         <item>TVS</item>
         <item>Ural</item>
         <item>Vectrix</item>
-        <item>Vehicles</item>
         <item>Vespa</item>
         <item>Voxan</item>
         <item>Wolf</item>
@@ -399,4 +384,5 @@
         <item>Zündapp</item>
     </string-array>
     <string name="textview_model">Model</string>
+    <string name="class_image">Class Image</string>
 </resources>
