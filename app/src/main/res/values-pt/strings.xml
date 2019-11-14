@@ -12,4 +12,5 @@
     <string name="textView_Make">Marca</string>
     <string name="textview_model">Modelo</string>
     <string name="class_image">Imagem da Classe</string>
+    <string name="add">Adicionar</string>
 </resources>

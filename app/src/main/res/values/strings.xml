@@ -385,4 +385,5 @@
     </string-array>
     <string name="textview_model">Model</string>
     <string name="class_image">Class Image</string>
+    <string name="add">Add</string>
 </resources>
