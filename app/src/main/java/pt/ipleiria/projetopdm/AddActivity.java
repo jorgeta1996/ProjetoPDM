@@ -21,7 +21,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import androidx.appcompat.app.AlertDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
@@ -41,23 +41,33 @@ public class AddActivity extends AppCompatActivity {
         Spinner spinnerCountries = findViewById(R.id.spinnerCountries);
 
 
-        //
-        spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         ArrayAdapter<String> adapterSpinnerVehicle = new ArrayAdapter<>(AddActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.classes));
         adapterSpinnerVehicle.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerVehicle.setAdapter(adapterSpinnerVehicle);
 
+
+        spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
+                        spinnerDialog = new SpinnerDialog(AddActivity.this, items, "Select items");
+                        break;
+                    case 1:
+                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaCarros)));
+                        spinnerDialog = new SpinnerDialog(AddActivity.this, items, "Select items");
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 //        ArrayAdapter<String> adapterSpinnerCountries = new ArrayAdapter<>(AddActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.countries));
 //        adapterSpinnerCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        spinnerCountries.setAdapter(adapterSpinnerCountries);
@@ -65,7 +75,6 @@ public class AddActivity extends AppCompatActivity {
 
 
         textViewSpinnerDialog = findViewById(R.id.textViewTesteSpinner);
-        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
         spinnerDialog = new SpinnerDialog(AddActivity.this, items, "Select items");
         spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
             @Override

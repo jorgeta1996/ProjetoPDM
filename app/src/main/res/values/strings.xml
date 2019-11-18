@@ -200,7 +200,7 @@
         <item>ZW,  Zimbabwe</item>
     </string-array>
     <string name="textView_Make">Brand</string>
-    <string-array name="makers_cars">
+    <string-array name="listaCarros">
         <item> </item>
         <item>Alfa Romeo</item>
         <item>Aston Martin</item>
@@ -339,7 +339,6 @@
         <item>Montesa</item>
         <item>Monto</item>
         <item>Morini</item>
-        <item>Motorradtechnik</item>
         <item>MV Agusta India</item>
         <item>MZ</item>
         <item>Norton</item>
@@ -355,7 +354,6 @@
         <item>Rieju</item>
         <item>Rivero</item>
         <item>Royal</item>
-        <item>Sachs</item>
         <item>Sachs</item>
         <item>Sanyang</item>
         <item>Scooters</item>
