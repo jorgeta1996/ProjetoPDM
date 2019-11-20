@@ -391,4 +391,6 @@
     <string name="ok" translatable="false">OK</string>
     <string name="textView_SpinnerMarcas">Choose a Brand</string>
     <string name="textView_SpinnerCountries">Choose the Country</string>
+    <string name="buttonPicture">Take Picture</string>
+    <string name="buttonGallery">Gallery</string>
 </resources>

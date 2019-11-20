@@ -20,4 +20,6 @@
     <string name="icon_infoTitle">Informação</string>
     <string name="textView_SpinnerMarcas">Escolha uma Marca</string>
     <string name="textView_SpinnerCountries">Escolha o País</string>
+    <string name="buttonGallery">Galeria</string>
+    <string name="buttonPicture">Tirar Fotografia</string>
 </resources>

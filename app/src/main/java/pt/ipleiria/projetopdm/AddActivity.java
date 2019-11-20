@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class AddActivity extends AppCompatActivity {
     private ArrayList<String> items;
     private TextView textViewSpinnerDialog;
     private TextView textViewSpinnerCountriesDialog;
+    private ImageView imageVehicle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class AddActivity extends AppCompatActivity {
         Spinner spinnerVehicle = findViewById(R.id.spinnerVehicle);
         textViewSpinnerDialog = findViewById(R.id.SpinnerMarcas);
         textViewSpinnerCountriesDialog = findViewById(R.id.SpinnerCountries);
+        imageVehicle = findViewById(R.id.imageVehicle);
 
 
         spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -42,11 +45,21 @@ public class AddActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
-                        spinnerDialog = new SpinnerDialog(AddActivity.this, items, "Select items");
+                        imageVehicle.setImageResource(R.drawable.classe_a);
                         break;
                     case 1:
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaCarros)));
-                        spinnerDialog = new SpinnerDialog(AddActivity.this, items, "Select items");
+                        imageVehicle.setImageResource(R.drawable.classe_b);
+                        break;
+                    case 2:
+                        //MUDAR LISTA
+                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
+                        imageVehicle.setImageResource(R.drawable.classe_c);
+                        break;
+                    case 3:
+                        //MUDAR LISTA
+                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
+                        imageVehicle.setImageResource(R.drawable.classe_d);
                         break;
                 }
             }
@@ -100,5 +113,14 @@ public class AddActivity extends AppCompatActivity {
                 textViewSpinnerCountriesDialog.setText(item);
             }
         });
+    }
+
+    public void onClickButtonPicture(View view) {
+    }
+
+    public void onClickButtonGallery(View view) {
+    }
+
+    public void onClickButtonAdd(View view) {
     }
 }
