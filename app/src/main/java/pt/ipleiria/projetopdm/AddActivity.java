@@ -27,6 +27,7 @@ public class AddActivity extends AppCompatActivity {
     private TextView textViewSpinnerDialog;
     private TextView textViewSpinnerCountriesDialog;
     private ImageView imageVehicle;
+    private int flagPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class AddActivity extends AppCompatActivity {
         textViewSpinnerDialog = findViewById(R.id.SpinnerMarcas);
         textViewSpinnerCountriesDialog = findViewById(R.id.SpinnerCountries);
         imageVehicle = findViewById(R.id.imageVehicle);
+        flagPicture=0;
 
 
         spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -45,21 +47,25 @@ public class AddActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
-                        imageVehicle.setImageResource(R.drawable.classe_a);
+                        if (flagPicture!=1)
+                            imageVehicle.setImageResource(R.drawable.classe_a);
                         break;
                     case 1:
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaCarros)));
-                        imageVehicle.setImageResource(R.drawable.classe_b);
+                        if (flagPicture!=1)
+                            imageVehicle.setImageResource(R.drawable.classe_b);
                         break;
                     case 2:
                         //MUDAR LISTA
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
-                        imageVehicle.setImageResource(R.drawable.classe_c);
+                        if (flagPicture!=1)
+                            imageVehicle.setImageResource(R.drawable.classe_c);
                         break;
                     case 3:
                         //MUDAR LISTA
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
-                        imageVehicle.setImageResource(R.drawable.classe_d);
+                        if (flagPicture!=1)
+                            imageVehicle.setImageResource(R.drawable.classe_d);
                         break;
                 }
             }
@@ -116,9 +122,11 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void onClickButtonPicture(View view) {
+        flagPicture=1;
     }
 
     public void onClickButtonGallery(View view) {
+        flagPicture=1;
     }
 
     public void onClickButtonAdd(View view) {
