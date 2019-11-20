@@ -2,24 +2,14 @@ package pt.ipleiria.projetopdm;
 
 
 import android.content.DialogInterface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,8 +33,7 @@ public class AddActivity extends AppCompatActivity {
 
         Spinner spinnerVehicle = findViewById(R.id.spinnerVehicle);
         Spinner spinnerCountries = findViewById(R.id.spinnerCountries);
-
-
+        textViewSpinnerDialog = findViewById(R.id.SpinnerMarcas);
 
 
         ArrayAdapter<String> adapterSpinnerVehicle = new ArrayAdapter<>(AddActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.classes));
@@ -64,7 +53,6 @@ public class AddActivity extends AppCompatActivity {
                         spinnerDialog = new SpinnerDialog(AddActivity.this, items, "Select items");
                         break;
                 }
-
             }
 
             @Override
@@ -77,21 +65,6 @@ public class AddActivity extends AppCompatActivity {
 
 
 
-        textViewSpinnerDialog = findViewById(R.id.textViewTesteSpinner);
-        spinnerDialog = new SpinnerDialog(AddActivity.this, items, "Select items");
-        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
-            @Override
-            public void onClick(String item, int position) {
-                textViewSpinnerDialog.setText(item);
-            }
-        });
-
-        textViewSpinnerDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                spinnerDialog.showSpinerDialog();
-            }
-        });
     }
 
     @Override
@@ -114,5 +87,16 @@ public class AddActivity extends AppCompatActivity {
         dialog.create();
         dialog.show();
 
+    }
+
+    public void onClickSpinnerMarcas(View view) {
+        spinnerDialog = new SpinnerDialog(AddActivity.this, items, "Select items");
+        spinnerDialog.showSpinerDialog();
+        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
+            @Override
+            public void onClick(String item, int position) {
+                textViewSpinnerDialog.setText(item);
+            }
+        });
     }
 }

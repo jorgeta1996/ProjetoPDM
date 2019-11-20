@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -97,17 +98,22 @@
             android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/textViewTesteSpinner"
-            android:layout_width="match_parent"
+            android:id="@+id/SpinnerMarcas"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center|start"
             android:text="@string/textView_Make"
             android:textSize="18sp" />
-    </LinearLayout>
 
-    <Spinner
-        android:id="@+id/spinnerMarca"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/textView_Make"
+            android:onClick="onClickSpinnerMarcas"
+            app:srcCompat="@drawable/ic_arrow_dropdown" />
+
+    </LinearLayout>
 
 </LinearLayout>
