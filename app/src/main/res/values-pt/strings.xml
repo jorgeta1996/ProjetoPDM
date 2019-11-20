@@ -16,4 +16,6 @@
     <string name="textViewSpinnerDialog">Selecione ou Procure Itens</string>
     <string name="textViewclose">Fechar</string>
     <string name="spinnerDialogTitle">Selecione Itens</string>
+    <string name="icon_infoText"><b>Class A</b><br/>Veículos de duas rodas<br/><br/><b>Class B</b><br/>Peso: Máx 3500Kg<br/>Passageiros: Máx 9<br/><br/><b>Class C</b><br/>Peso: >3500Kg<br/>Passageiros: Máx 9<br/><br/><b>Class D</b><br/>Passageiros: >9</string>
+    <string name="icon_infoTitle">Informação</string>
 </resources>

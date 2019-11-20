@@ -1,10 +1,13 @@
 package pt.ipleiria.projetopdm;
 
 
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
@@ -46,7 +50,6 @@ public class AddActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterSpinnerVehicle = new ArrayAdapter<>(AddActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.classes));
         adapterSpinnerVehicle.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerVehicle.setAdapter(adapterSpinnerVehicle);
-
 
         spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -89,5 +92,27 @@ public class AddActivity extends AppCompatActivity {
                 spinnerDialog.showSpinerDialog();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add, menu);
+        return true;
+    }
+
+    public void onClickInfo(MenuItem item) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage(R.string.icon_infoText);
+        dialog.setTitle(R.string.icon_infoTitle);
+        dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                return;
+            }
+        });
+
+        dialog.create();
+        dialog.show();
+
     }
 }

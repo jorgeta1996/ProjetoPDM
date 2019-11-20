@@ -7,15 +7,6 @@
         <item>Class C</item>
         <item>Class D</item>
     </string-array>
-    <string name="searchString">Search</string>
-    <string name="licensePlateString">License Plate</string>
-    <string name="hintMatricula" translatable="false">00AA00</string>
-    <string name="SearchVehicleString">Search Vehicle</string>
-    <string name="VehiclesNotFoundString">Vehicles not found</string>
-    <string name="textViewOwner">Owner</string>
-    <string name="editTextOwner">Owner\'s name</string>
-    <string name="category">Category</string>
-    <string name="country">Country</string>
     <string-array name="countries">
         <item>P,  Portugal </item>
         <item>A,  Austria</item>
@@ -199,7 +190,6 @@
         <item>ZA,  South Africa</item>
         <item>ZW,  Zimbabwe</item>
     </string-array>
-    <string name="textView_Make">Brand</string>
     <string-array name="listaCarros">
         <item> </item>
         <item>Alfa Romeo</item>
@@ -259,8 +249,6 @@
         <item>Volvo</item>
         <item>VW</item>
     </string-array>
-
-
     <string-array name="listaMotas">
         <item>Adly</item>
         <item>Aeon</item>
@@ -381,10 +369,25 @@
         <item>Zhongyu</item>
         <item>Zündapp</item>
     </string-array>
+
+    <string name="searchString">Search</string>
+    <string name="licensePlateString">License Plate</string>
+    <string name="hintMatricula" translatable="false">00AA00</string>
+    <string name="SearchVehicleString">Search Vehicle</string>
+    <string name="VehiclesNotFoundString">Vehicles not found</string>
+    <string name="textViewOwner">Owner</string>
+    <string name="editTextOwner">Owner\'s name</string>
+    <string name="category">Category</string>
+    <string name="country">Country</string>
+    <string name="textView_Make">Brand</string>
     <string name="textview_model">Model</string>
     <string name="class_image">Class Image</string>
     <string name="add">Add</string>
     <string name="textViewSpinnerDialog">Select or Search Items</string>
     <string name="textViewclose">Close</string>
     <string name="spinnerDialogTitle">Select Items</string>
+    <string name="icon_info" translatable="false">Info</string>
+    <string name="icon_infoText"><b>Class A</b>\nVehicles with two wheels.\n\n<b>Class B</b>\nWeight: Máx 3500Kg\nPassengers: Máx 9\n\n<b>Class C</b>\nWeight: >3500Kg\nPassengers: Máx 9\n\n<b>Class D</b>\nPassengers: >9</string>
+    <string name="icon_infoTitle">Information</string>
+    <string name="ok" translatable="false">OK</string>
 </resources>
