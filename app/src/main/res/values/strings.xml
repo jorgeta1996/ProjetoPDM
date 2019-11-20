@@ -393,4 +393,6 @@
     <string name="textView_SpinnerCountries">Choose the Country</string>
     <string name="buttonPicture">Take Picture</string>
     <string name="buttonGallery">Gallery</string>
+    <string name="txtSelectPhoto">Select Photo</string>
+    <string name="txtErrorFile">Error open Image</string>
 </resources>

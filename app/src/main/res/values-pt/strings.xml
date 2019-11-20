@@ -22,4 +22,6 @@
     <string name="textView_SpinnerCountries">Escolha o País</string>
     <string name="buttonGallery">Galeria</string>
     <string name="buttonPicture">Tirar Fotografia</string>
+    <string name="txtSelectPhoto">Selecione a Foto</string>
+    <string name="txtErrorFile">Erro ao abrir Imagem</string>
 </resources>
