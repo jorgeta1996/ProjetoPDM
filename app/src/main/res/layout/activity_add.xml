@@ -29,10 +29,31 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <Spinner
-        android:id="@+id/spinnerCountries"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/SpinnerCountries"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onClickSpinnerCountries"
+            android:text="@string/textView_SpinnerCountries"
+            android:textColor="#241B1B"
+            android:textSize="17sp" />
+
+        <ImageButton
+            android:id="@+id/buttonSpinnerCountries"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/textView_Make"
+            android:onClick="onClickSpinnerCountries"
+            app:srcCompat="@drawable/ic_arrow_dropdown" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,7 +97,8 @@
         <Spinner
             android:id="@+id/spinnerVehicle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:entries="@array/classes" />
 
     </LinearLayout>
 
@@ -101,12 +123,16 @@
             android:id="@+id/SpinnerMarcas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:gravity="center|start"
-            android:text="@string/textView_Make"
-            android:textSize="18sp" />
+            android:onClick="onClickSpinnerMarcas"
+            android:text="@string/textView_SpinnerMarcas"
+            android:textColor="#241B1B"
+            android:textSize="17sp"
+            android:focusable="true" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/buttonSpinnerMarcas"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="#00FFFFFF"

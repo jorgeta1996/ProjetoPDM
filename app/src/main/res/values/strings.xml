@@ -389,4 +389,6 @@
     <string name="icon_infoText"><b>Class A</b>\nVehicles with two wheels.\n\n<b>Class B</b>\nWeight: Máx 3500Kg\nPassengers: Máx 9\n\n<b>Class C</b>\nWeight: >3500Kg\nPassengers: Máx 9\n\n<b>Class D</b>\nPassengers: >9</string>
     <string name="icon_infoTitle">Information</string>
     <string name="ok" translatable="false">OK</string>
+    <string name="textView_SpinnerMarcas">Choose a Brand</string>
+    <string name="textView_SpinnerCountries">Choose the Country</string>
 </resources>
