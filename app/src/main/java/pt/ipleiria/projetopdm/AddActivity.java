@@ -191,8 +191,7 @@ public class AddActivity extends AppCompatActivity {
                                 .load(selectedImageUri)
                                 .override(300, 300)
                                 .into(imageVehicle);
-                        pathPhoto = "adfgsd" + ".jpg";
-                        saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
+
                         read = true;
                     } catch (Exception e) {
                         Log.e("GestorVeiculos", getString(R.string.txtErrorFile), e);
