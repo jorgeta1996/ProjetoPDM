@@ -239,7 +239,7 @@ public class AddActivity extends AppCompatActivity {
             pathPhoto = licensePlate + ".jpg";
             saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
         }
-        Veiculo veiculo = new Veiculo(brand,model,licensePlate,pathPhoto,owner,color,category,country);
+        Veiculo veiculo = new Veiculo(brand,model,licensePlate,imageVehicle,owner,color,category,country);
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra(NEW_VEHICLE, veiculo);

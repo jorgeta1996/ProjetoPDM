@@ -1,5 +1,7 @@
 package pt.ipleiria.projetopdm.modelo;
 
+import android.widget.ImageView;
+
 import java.io.Serializable;
 
 import androidx.annotation.NonNull;
@@ -9,17 +11,17 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
     private String matricula;
     private String modelo;
     private String marca;
-    private String pathPhoto;
+    private ImageView photo;
     private String proprietario;
     private String cor;
     private String categoria;
     private String country;
 
-    public Veiculo (String marca,String modelo, String matricula, String pathPhoto, String proprietario, String cor, String categoria, String country){
+    public Veiculo (String marca,String modelo, String matricula, ImageView photo, String proprietario, String cor, String categoria, String country){
         this.marca = marca;
         this.modelo = modelo;
         this.matricula = matricula;
-        this.pathPhoto = pathPhoto;
+        this.photo = photo;
         this.proprietario = proprietario;
         this.cor = cor;
         this.categoria = categoria;
@@ -44,8 +46,8 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
         return marca;
     }
 
-    public String getPathPhoto() {
-        return pathPhoto;
+    public ImageView getPhoto() {
+        return photo;
     }
 
     public String getProprietario() {
