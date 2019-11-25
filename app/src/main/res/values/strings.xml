@@ -395,4 +395,6 @@
     <string name="buttonGallery">Gallery</string>
     <string name="txtSelectPhoto">Select Photo</string>
     <string name="txtErrorFile">Error open Image</string>
+    <string name="txtFillData">Fill Data</string>
+    <string name="textView_SpinnerModel">Choose a Model</string>
 </resources>

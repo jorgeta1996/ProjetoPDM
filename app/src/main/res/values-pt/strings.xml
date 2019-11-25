@@ -24,4 +24,6 @@
     <string name="buttonPicture">Tirar Fotografia</string>
     <string name="txtSelectPhoto">Selecione a Foto</string>
     <string name="txtErrorFile">Erro ao abrir Imagem</string>
+    <string name="txtFillData">Preencha os Dados</string>
+    <string name="textView_SpinnerModel">Escolha um Modelo</string>
 </resources>
