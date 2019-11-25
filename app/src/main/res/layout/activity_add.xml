@@ -159,26 +159,14 @@
             android:layout_width="16dp"
             android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/SpinnerModel"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center|start"
-            android:onClick="onClickSpinnerModel"
-            android:text="@string/textView_SpinnerModel"
-            android:textColor="#241B1B"
-            android:textSize="17sp" />
-
-        <ImageButton
-            android:id="@+id/buttonSpinnerModel"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="#00FFFFFF"
-            android:contentDescription="@string/textView_Make"
-            android:onClick="onClickSpinnerModel"
-            app:srcCompat="@drawable/ic_arrow_dropdown" />
+        <EditText
+            android:id="@+id/editTextModel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/textview_model"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName" />
 
     </LinearLayout>
 

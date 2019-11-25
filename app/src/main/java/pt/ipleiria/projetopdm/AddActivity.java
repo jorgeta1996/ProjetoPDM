@@ -44,7 +44,7 @@ public class AddActivity extends AppCompatActivity {
     private ArrayList<String> items;
     private TextView textViewSpinnerDialog;
     private TextView textViewSpinnerCountriesDialog;
-    private TextView textViewSpinnerModelDialog;
+    private EditText editTextModel;
     private ImageView imageVehicle;
     private String category;
 
@@ -57,8 +57,8 @@ public class AddActivity extends AppCompatActivity {
         Spinner spinnerVehicle = findViewById(R.id.spinnerVehicle);
         textViewSpinnerDialog = findViewById(R.id.SpinnerMarcas);
         textViewSpinnerCountriesDialog = findViewById(R.id.SpinnerCountries);
-        textViewSpinnerModelDialog = findViewById(R.id.SpinnerModel);
         imageVehicle = findViewById(R.id.imageVehicle);
+        editTextModel = findViewById(R.id.editTextModel);
 
 
         spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -199,7 +199,7 @@ public class AddActivity extends AppCompatActivity {
         String licensePlate = editTextPlate.getText().toString().trim();
         String country = textViewSpinnerCountriesDialog.getText().toString();
         String brand = textViewSpinnerDialog.getText().toString();
-        String model = textViewSpinnerModelDialog.getText().toString();
+        String model = editTextModel.getText().toString();
         String color = "black";
         String pathPhoto="";
 
@@ -231,6 +231,5 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickSpinnerModel(View view) {
-    }
+
 }
