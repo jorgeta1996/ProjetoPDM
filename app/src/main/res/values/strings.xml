@@ -397,4 +397,5 @@
     <string name="txtErrorFile">Error open Image</string>
     <string name="txtFillData">Fill Data</string>
     <string name="textView_SpinnerModel">Choose a Model</string>
+    <string name="txtView_color">Color</string>
 </resources>

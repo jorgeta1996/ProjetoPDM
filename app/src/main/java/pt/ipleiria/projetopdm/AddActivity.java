@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -47,6 +51,8 @@ public class AddActivity extends AppCompatActivity {
     private EditText editTextModel;
     private ImageView imageVehicle;
     private String category;
+    private Button btnCor;
+    private int cor;
 
 
     @Override
@@ -59,6 +65,9 @@ public class AddActivity extends AppCompatActivity {
         textViewSpinnerCountriesDialog = findViewById(R.id.SpinnerCountries);
         imageVehicle = findViewById(R.id.imageVehicle);
         editTextModel = findViewById(R.id.editTextModel);
+        btnCor = findViewById(R.id.buttonColor);
+        btnCor.setBackgroundColor(Color.RED);
+        cor = Color.RED;
 
 
         spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -231,5 +240,21 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
+
+    public void onClickBtnColor(View view) {
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, cor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+                Toast.makeText(AddActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                btnCor.setBackgroundColor(color);
+                cor=color;
+            }
+        });
+        colorPicker.show();
+    }
 
 }

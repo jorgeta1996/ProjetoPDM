@@ -26,4 +26,5 @@
     <string name="txtErrorFile">Erro ao abrir Imagem</string>
     <string name="txtFillData">Preencha os Dados</string>
     <string name="textView_SpinnerModel">Escolha um Modelo</string>
+    <string name="txtView_color">Cor</string>
 </resources>
