@@ -4,12 +4,12 @@ package pt.ipleiria.projetopdm;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -56,6 +55,7 @@ public class AddActivity extends AppCompatActivity {
     private Button btnCor;
     private int cor;
     private String pathPhoto;
+    private Uri photo;
 
 
     @Override
@@ -114,7 +114,12 @@ public class AddActivity extends AppCompatActivity {
         if(savedInstanceState!=null){
             textViewSpinnerDialog.setText(savedInstanceState.getString("mMarca"));
             textViewSpinnerCountriesDialog.setText(savedInstanceState.getString("mCountry"));
-            pathPhoto= savedInstanceState.getString("mPath");
+            read = savedInstanceState.getBoolean("mRead");
+            Glide.with(this)
+                    .asBitmap()
+                    .load(savedInstanceState.getParcelable("mFoto"))
+                    .override(300, 300)
+                    .into(imageVehicle);
         }
 
 
@@ -191,8 +196,8 @@ public class AddActivity extends AppCompatActivity {
                                 .load(selectedImageUri)
                                 .override(300, 300)
                                 .into(imageVehicle);
-
                         read = true;
+                        photo=selectedImageUri;
                     } catch (Exception e) {
                         Log.e("GestorVeiculos", getString(R.string.txtErrorFile), e);
                         read = false;
@@ -276,9 +281,9 @@ public class AddActivity extends AppCompatActivity {
 
         outState.putString("mMarca",textViewSpinnerDialog.getText().toString());
         outState.putString("mCountry",textViewSpinnerCountriesDialog.getText().toString());
-        outState.putString("mPath",pathPhoto);
+        outState.putBoolean("mRead",read);
+        outState.putParcelable("mFoto",photo);
+
     }
-
-
 
 }
