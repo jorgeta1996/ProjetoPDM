@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
@@ -53,6 +55,7 @@ public class AddActivity extends AppCompatActivity {
     private String category;
     private Button btnCor;
     private int cor;
+    private String pathPhoto;
 
 
     @Override
@@ -107,6 +110,14 @@ public class AddActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        if(savedInstanceState!=null){
+            textViewSpinnerDialog.setText(savedInstanceState.getString("mMarca"));
+            textViewSpinnerCountriesDialog.setText(savedInstanceState.getString("mCountry"));
+            pathPhoto= savedInstanceState.getString("mPath");
+        }
+
+
 
     }
 
@@ -180,6 +191,8 @@ public class AddActivity extends AppCompatActivity {
                                 .load(selectedImageUri)
                                 .override(300, 300)
                                 .into(imageVehicle);
+                        pathPhoto = "adfgsd" + ".jpg";
+                        saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
                         read = true;
                     } catch (Exception e) {
                         Log.e("GestorVeiculos", getString(R.string.txtErrorFile), e);
@@ -191,6 +204,7 @@ public class AddActivity extends AppCompatActivity {
                         if (data != null && data.getExtras() != null) {
                             Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
                             imageVehicle.setImageBitmap(imageBitmap);
+
                             read = true;
                         }
                     } catch (Exception e) {
@@ -210,7 +224,7 @@ public class AddActivity extends AppCompatActivity {
         String brand = textViewSpinnerDialog.getText().toString();
         String model = editTextModel.getText().toString();
         String color = "black";
-        String pathPhoto="";
+        pathPhoto="";
 
         if (brand.trim().isEmpty() || model.trim().isEmpty()|| licensePlate.trim().isEmpty()|| owner.trim().isEmpty()|| color.trim().isEmpty()|| category.trim().isEmpty()|| country.trim().isEmpty()) {
             Toast.makeText(this, R.string.txtFillData, Toast.LENGTH_LONG).show();
@@ -256,5 +270,16 @@ public class AddActivity extends AppCompatActivity {
         });
         colorPicker.show();
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("mMarca",textViewSpinnerDialog.getText().toString());
+        outState.putString("mCountry",textViewSpinnerCountriesDialog.getText().toString());
+        outState.putString("mPath",pathPhoto);
+    }
+
+
 
 }
