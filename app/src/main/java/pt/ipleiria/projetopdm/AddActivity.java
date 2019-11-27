@@ -4,8 +4,8 @@ package pt.ipleiria.projetopdm;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,8 +43,8 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class AddActivity extends AppCompatActivity {
 
     public static final String NEW_VEHICLE = "NEWVEHICLE";
-    public static final int GALLERY_REQUEST_CODE_ADD = 1;
-    public static final int REQUEST_TAKE_PHOTO = 2;
+    public static final int GALLERY_REQUEST_CODE = 1;
+    public static final int CAMERA_REQUEST_CODE = 2;
     private boolean read;
 
     private SpinnerDialog spinnerDialog;
@@ -55,7 +57,6 @@ public class AddActivity extends AppCompatActivity {
     private Button btnCor;
     private int cor;
     private String pathPhoto;
-    private Uri photo;
 
 
     @Override
@@ -82,12 +83,14 @@ public class AddActivity extends AppCompatActivity {
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_a);
+                            pathPhoto="";
                         break;
                     case 1:
                         category="Class B";
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaCarros)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_b);
+                            pathPhoto="";
                         break;
                     case 2:
                         category="Class C";
@@ -95,6 +98,7 @@ public class AddActivity extends AppCompatActivity {
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_c);
+                            pathPhoto="";
                         break;
                     case 3:
                         category="Class D";
@@ -102,6 +106,7 @@ public class AddActivity extends AppCompatActivity {
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_d);
+                            pathPhoto="";
                         break;
                 }
             }
@@ -115,12 +120,17 @@ public class AddActivity extends AppCompatActivity {
             textViewSpinnerDialog.setText(savedInstanceState.getString("mMarca"));
             textViewSpinnerCountriesDialog.setText(savedInstanceState.getString("mCountry"));
             read = savedInstanceState.getBoolean("mRead");
-            Glide.with(this)
-                    .asBitmap()
-                    .load(savedInstanceState.getParcelable("mFoto"))
-                    .override(300, 300)
-                    .into(imageVehicle);
+            pathPhoto=savedInstanceState.getString("mFoto");
+
+            try {
+                File f=new File(this.getFilesDir() + "/" + pathPhoto);
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                imageVehicle.setImageBitmap(b);
+            } catch (Exception e) {
+
+            }
         }
+
 
 
 
@@ -148,7 +158,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void onClickSpinnerMarcas(View view) {
-        spinnerDialog = new SpinnerDialog(AddActivity.this, items, "Select items");
+        spinnerDialog = new SpinnerDialog(AddActivity.this, items, getString(R.string.textViewSpinnerDialog));
         spinnerDialog.showSpinerDialog();
         spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
             @Override
@@ -160,7 +170,7 @@ public class AddActivity extends AppCompatActivity {
 
     public void onClickSpinnerCountries(View view) {
         ArrayList<String> countries = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.countries)));
-        spinnerDialog = new SpinnerDialog(AddActivity.this, countries, "Select items");
+        spinnerDialog = new SpinnerDialog(AddActivity.this, countries, getString(R.string.textViewSpinnerDialog));
         spinnerDialog.showSpinerDialog();
         spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
             @Override
@@ -171,24 +181,24 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void onClickButtonPicture(View view) {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
         if (cameraIntent.resolveActivity(this.getPackageManager()) != null) {
-            startActivityForResult(cameraIntent, REQUEST_TAKE_PHOTO);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
         }
     }
 
     public void onClickButtonGallery(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.txtSelectPhoto)), GALLERY_REQUEST_CODE_ADD);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.txtSelectPhoto)), GALLERY_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK)
+        if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case GALLERY_REQUEST_CODE_ADD:
+                case GALLERY_REQUEST_CODE:
                     try {
                         Uri selectedImageUri = data.getData();
                         Glide.with(this)
@@ -197,18 +207,17 @@ public class AddActivity extends AppCompatActivity {
                                 .override(300, 300)
                                 .into(imageVehicle);
                         read = true;
-                        photo=selectedImageUri;
+
                     } catch (Exception e) {
                         Log.e("GestorVeiculos", getString(R.string.txtErrorFile), e);
                         read = false;
                     }
                     break;
-                case REQUEST_TAKE_PHOTO:
+                case CAMERA_REQUEST_CODE:
                     try {
                         if (data != null && data.getExtras() != null) {
                             Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
                             imageVehicle.setImageBitmap(imageBitmap);
-
                             read = true;
                         }
                     } catch (Exception e) {
@@ -216,6 +225,7 @@ public class AddActivity extends AppCompatActivity {
                         read = false;
                     }
             }
+        }
     }
 
     public void onClickButtonAdd(View view) {
@@ -228,7 +238,6 @@ public class AddActivity extends AppCompatActivity {
         String brand = textViewSpinnerDialog.getText().toString();
         String model = editTextModel.getText().toString();
         int color = cor;
-        pathPhoto="";
 
         if (brand.trim().isEmpty() || model.trim().isEmpty()|| licensePlate.trim().isEmpty()|| owner.trim().isEmpty()|| color==0|| category.trim().isEmpty()|| country.trim().isEmpty()) {
             Toast.makeText(this, R.string.txtFillData, Toast.LENGTH_LONG).show();
@@ -236,10 +245,15 @@ public class AddActivity extends AppCompatActivity {
         }
 
         if (read) {
+
+            File f=new File(this.getFilesDir() + "/" + pathPhoto);
+            f.delete();
+
             pathPhoto = licensePlate + ".jpg";
             saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
         }
-        Veiculo veiculo = new Veiculo(brand,model,licensePlate,imageVehicle,owner,color,category,country);
+        Veiculo veiculo = new Veiculo(brand,model,licensePlate,pathPhoto,owner,color,category,country);
+
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra(NEW_VEHICLE, veiculo);
@@ -263,7 +277,7 @@ public class AddActivity extends AppCompatActivity {
         AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, cor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
-                Toast.makeText(AddActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddActivity.this, getString(R.string.onCancel), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -282,8 +296,10 @@ public class AddActivity extends AppCompatActivity {
         outState.putString("mMarca",textViewSpinnerDialog.getText().toString());
         outState.putString("mCountry",textViewSpinnerCountriesDialog.getText().toString());
         outState.putBoolean("mRead",read);
-        outState.putParcelable("mFoto",photo);
-
+        if (read) {
+            pathPhoto = getString(R.string.temporary) + ".jpg";
+            saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
+            outState.putString("mFoto",pathPhoto);
+        }
     }
-
 }
