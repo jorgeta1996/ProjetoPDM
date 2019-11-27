@@ -21,7 +21,7 @@ public class CustomAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        ArrayList<VehicleInfo> productList = teamName.get(groupPosition).getPlayerName();
+        ArrayList<ChildInfo> productList = teamName.get(groupPosition).getPlayerName();
         return productList.get(childPosition);
     }
 
@@ -34,12 +34,12 @@ public class CustomAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                              View view, ViewGroup parent) {
 
-        VehicleInfo detailInfo = (VehicleInfo) getChild(groupPosition, childPosition);
+        ChildInfo detailInfo = (ChildInfo) getChild(groupPosition, childPosition);
         if (view == null) {
             LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = infalInflater.inflate(R.layout.itens_veiculo, null);
+            view = infalInflater.inflate(R.layout.child_items, null);
         }
-        TextView childItem = (TextView) view.findViewById(R.id.veiculoItem);
+        TextView childItem = (TextView) view.findViewById(R.id.childItem);
         childItem.setText(detailInfo.getName().trim());
 
         return view;
@@ -48,7 +48,7 @@ public class CustomAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
 
-        ArrayList<VehicleInfo> productList = teamName.get(groupPosition).getPlayerName();
+        ArrayList<ChildInfo> productList = teamName.get(groupPosition).getPlayerName();
         return productList.size();
 
     }
@@ -75,10 +75,10 @@ public class CustomAdapter extends BaseExpandableListAdapter {
         GroupInfo headerInfo = (GroupInfo) getGroup(groupPosition);
         if (view == null) {
             LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inf.inflate(R.layout.itens_globais, null);
+            view = inf.inflate(R.layout.group_items, null);
         }
 
-        TextView heading = (TextView) view.findViewById(R.id.headingGlobal);
+        TextView heading = (TextView) view.findViewById(R.id.heading);
         heading.setText(headerInfo.getName().trim());
 
         return view;

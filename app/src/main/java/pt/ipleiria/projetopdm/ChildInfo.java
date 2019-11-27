@@ -1,7 +1,6 @@
 package pt.ipleiria.projetopdm;
 
-public class VehicleInfo {
-
+public class ChildInfo {
 
     private String playerName = "";
 

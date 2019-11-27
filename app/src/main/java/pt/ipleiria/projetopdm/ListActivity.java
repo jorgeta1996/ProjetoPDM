@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public class ListActivity  extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity {
 
     private LinkedHashMap<String, GroupInfo> team = new LinkedHashMap<String, GroupInfo>();
     private ArrayList<GroupInfo> deptList = new ArrayList<GroupInfo>();
@@ -18,12 +18,10 @@ public class ListActivity  extends AppCompatActivity {
     private CustomAdapter listAdapter;
     private ExpandableListView simpleExpandableListView;
 
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_list);
 
         // add data for displaying in expandable list view
         loadData();
@@ -42,9 +40,10 @@ public class ListActivity  extends AppCompatActivity {
                 //get the group header
                 GroupInfo headerInfo = deptList.get(groupPosition);
                 //get the child info
-                VehicleInfo detailInfo = headerInfo.getPlayerName().get(childPosition);
+                ChildInfo detailInfo = headerInfo.getPlayerName().get(childPosition);
                 //display it or do something with it
-                Toast.makeText(getBaseContext(), " Team And Player :: " + headerInfo.getName()+ "/" + detailInfo.getName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), " Team And Player :: " + headerInfo.getName()
+                        + "/" + detailInfo.getName(), Toast.LENGTH_LONG).show();
                 return false;
             }
         });
@@ -94,14 +93,14 @@ public class ListActivity  extends AppCompatActivity {
         }
 
         // get the children for the group
-        ArrayList<VehicleInfo> productList = headerInfo.getPlayerName();
+        ArrayList<ChildInfo> productList = headerInfo.getPlayerName();
         // size of the children list
         int listSize = productList.size();
         // add to the counter
         listSize++;
 
         // create a new child and add that to the group
-        VehicleInfo detailInfo = new VehicleInfo();
+        ChildInfo detailInfo = new ChildInfo();
         detailInfo.setName(playerName);
         productList.add(detailInfo);
         headerInfo.setPlayerName(productList);
