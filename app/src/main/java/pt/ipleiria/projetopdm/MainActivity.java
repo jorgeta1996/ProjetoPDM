@@ -1,6 +1,8 @@
 package pt.ipleiria.projetopdm;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
@@ -17,13 +19,25 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerVehiclesAdapter mAdapter;
 
     public static final int ADD_VEHICLE_REQUEST_CODE = 1;
+    private static final String ESTADO_GESTOR_VEICULOS = "ESTADO_GESTOR_VEICULOS";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //TESTE
+
+        if (savedInstanceState == null) {
+            this.gestorVeiculos = gestorVeiculos.getInstance();
+//            this.gestorVeiculos.lerFicheiro(this);
+        } else {
+            this.gestorVeiculos = (GestorVeiculos) savedInstanceState.getSerializable(ESTADO_GESTOR_VEICULOS);
+        }
+
+        mRecyclerView = findViewById(R.id.recyclerViewMain);
+        mAdapter = new RecyclerVehiclesAdapter(gestorVeiculos,this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
@@ -53,5 +67,12 @@ public class MainActivity extends AppCompatActivity {
 //                    mAdapter.notifyDataSetChanged();
 //                }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(ESTADO_GESTOR_VEICULOS, gestorVeiculos);
+
     }
 }

@@ -83,12 +83,14 @@ public class AddActivity extends AppCompatActivity {
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_a);
+                            pathPhoto="";
                         break;
                     case 1:
                         category="Class B";
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaCarros)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_b);
+                            pathPhoto="";
                         break;
                     case 2:
                         category="Class C";
@@ -96,6 +98,7 @@ public class AddActivity extends AppCompatActivity {
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_c);
+                            pathPhoto="";
                         break;
                     case 3:
                         category="Class D";
@@ -103,6 +106,7 @@ public class AddActivity extends AppCompatActivity {
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_d);
+                            pathPhoto="";
                         break;
                 }
             }
@@ -249,6 +253,7 @@ public class AddActivity extends AppCompatActivity {
             saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
         }
         Veiculo veiculo = new Veiculo(brand,model,licensePlate,pathPhoto,owner,color,category,country);
+
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra(NEW_VEHICLE, veiculo);
