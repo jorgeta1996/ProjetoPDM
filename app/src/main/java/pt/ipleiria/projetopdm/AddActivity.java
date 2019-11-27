@@ -227,10 +227,10 @@ public class AddActivity extends AppCompatActivity {
         String country = textViewSpinnerCountriesDialog.getText().toString();
         String brand = textViewSpinnerDialog.getText().toString();
         String model = editTextModel.getText().toString();
-        String color = "black";
+        int color = cor;
         pathPhoto="";
 
-        if (brand.trim().isEmpty() || model.trim().isEmpty()|| licensePlate.trim().isEmpty()|| owner.trim().isEmpty()|| color.trim().isEmpty()|| category.trim().isEmpty()|| country.trim().isEmpty()) {
+        if (brand.trim().isEmpty() || model.trim().isEmpty()|| licensePlate.trim().isEmpty()|| owner.trim().isEmpty()|| color==0|| category.trim().isEmpty()|| country.trim().isEmpty()) {
             Toast.makeText(this, R.string.txtFillData, Toast.LENGTH_LONG).show();
             return;
         }

@@ -13,11 +13,11 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
     private String marca;
     private ImageView photo;
     private String proprietario;
-    private String cor;
+    private int cor;
     private String categoria;
     private String country;
 
-    public Veiculo (String marca,String modelo, String matricula, ImageView photo, String proprietario, String cor, String categoria, String country){
+    public Veiculo (String marca,String modelo, String matricula, ImageView photo, String proprietario, int cor, String categoria, String country){
         this.marca = marca;
         this.modelo = modelo;
         this.matricula = matricula;
@@ -54,7 +54,7 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
         return proprietario;
     }
 
-    public String getCor() {
+    public int getCor() {
         return cor;
     }
 
