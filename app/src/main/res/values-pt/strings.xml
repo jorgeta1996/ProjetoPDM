@@ -27,4 +27,6 @@
     <string name="txtFillData">Preencha os Dados</string>
     <string name="textView_SpinnerModel">Escolha um Modelo</string>
     <string name="txtView_color">Cor</string>
+    <string name="onCancel">Cancelado</string>
+    <string name="temporary">temporario</string>
 </resources>

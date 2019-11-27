@@ -29,6 +29,13 @@ public class GestorVeiculos implements Serializable {
         }
     }
 
+    public void atualizarVeiculo(int pos, Veiculo veiculo) {
+        if (!veiculos.contains(veiculo) || veiculo.getMatricula().equalsIgnoreCase(veiculos.get(pos).getMatricula())) {
+            veiculos.set(pos, veiculo);
+            Collections.sort(veiculos);
+        }
+    }
+
     public Veiculo obterVeiculo(int pos){
         return veiculos.get(pos);
     }

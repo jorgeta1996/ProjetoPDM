@@ -158,7 +158,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void onClickSpinnerMarcas(View view) {
-        spinnerDialog = new SpinnerDialog(AddActivity.this, items, "Select items");
+        spinnerDialog = new SpinnerDialog(AddActivity.this, items, getString(R.string.textViewSpinnerDialog));
         spinnerDialog.showSpinerDialog();
         spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
             @Override
@@ -170,7 +170,7 @@ public class AddActivity extends AppCompatActivity {
 
     public void onClickSpinnerCountries(View view) {
         ArrayList<String> countries = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.countries)));
-        spinnerDialog = new SpinnerDialog(AddActivity.this, countries, "Select items");
+        spinnerDialog = new SpinnerDialog(AddActivity.this, countries, getString(R.string.textViewSpinnerDialog));
         spinnerDialog.showSpinerDialog();
         spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
             @Override
@@ -225,7 +225,6 @@ public class AddActivity extends AppCompatActivity {
                         read = false;
                     }
             }
-
         }
     }
 
@@ -277,7 +276,7 @@ public class AddActivity extends AppCompatActivity {
         AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, cor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
-                Toast.makeText(AddActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddActivity.this, getString(R.string.onCancel), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -297,7 +296,7 @@ public class AddActivity extends AppCompatActivity {
         outState.putString("mCountry",textViewSpinnerCountriesDialog.getText().toString());
         outState.putBoolean("mRead",read);
         if (read) {
-            pathPhoto = "temporary" + ".jpg";
+            pathPhoto = getString(R.string.temporary) + ".jpg";
             saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
             outState.putString("mFoto",pathPhoto);
         }
