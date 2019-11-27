@@ -1,10 +1,10 @@
 package pt.ipleiria.projetopdm;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +18,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickAddVehicle(View view) {
         Intent intent = new Intent(this, AddActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickLista(View view) {
+        Intent intent = new Intent(this, ListActivity.class);
         startActivity(intent);
     }
 }
