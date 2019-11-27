@@ -10,6 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import pt.ipleiria.projetopdm.list.ChildInfo;
+import pt.ipleiria.projetopdm.list.CustomAdapter;
+import pt.ipleiria.projetopdm.list.GroupInfo;
+
 public class ListActivity extends AppCompatActivity {
 
     private LinkedHashMap<String, GroupInfo> team = new LinkedHashMap<String, GroupInfo>();

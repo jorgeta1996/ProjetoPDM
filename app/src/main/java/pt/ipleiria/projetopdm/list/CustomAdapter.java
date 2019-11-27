@@ -1,4 +1,4 @@
-package pt.ipleiria.projetopdm;
+package pt.ipleiria.projetopdm.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import pt.ipleiria.projetopdm.R;
 
 public class CustomAdapter extends BaseExpandableListAdapter {
 

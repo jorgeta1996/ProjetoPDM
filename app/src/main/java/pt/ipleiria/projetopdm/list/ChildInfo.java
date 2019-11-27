@@ -1,4 +1,4 @@
-package pt.ipleiria.projetopdm;
+package pt.ipleiria.projetopdm.list;
 
 public class ChildInfo {
 
