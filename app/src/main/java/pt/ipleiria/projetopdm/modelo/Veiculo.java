@@ -11,17 +11,17 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
     private String matricula;
     private String modelo;
     private String marca;
-    private ImageView photo;
+    private String pathPhoto;
     private String proprietario;
     private int cor;
     private String categoria;
     private String country;
 
-    public Veiculo (String marca,String modelo, String matricula, ImageView photo, String proprietario, int cor, String categoria, String country){
+    public Veiculo (String marca, String modelo, String matricula, String pathPhoto, String proprietario, int cor, String categoria, String country){
         this.marca = marca;
         this.modelo = modelo;
         this.matricula = matricula;
-        this.photo = photo;
+        this.pathPhoto = pathPhoto;
         this.proprietario = proprietario;
         this.cor = cor;
         this.categoria = categoria;
@@ -46,8 +46,8 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
         return marca;
     }
 
-    public ImageView getPhoto() {
-        return photo;
+    public String getPathPhoto() {
+        return pathPhoto;
     }
 
     public String getProprietario() {
