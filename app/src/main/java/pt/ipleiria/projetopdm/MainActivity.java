@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerVehiclesAdapter mAdapter;
 
-    public static final int REQUEST_CODE_ADD_CONTACT = 1;
+    public static final int ADD_VEHICLE_REQUEST_CODE = 1;
 
 
     @Override
@@ -29,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickAddVehicle(View view) {
         Intent intent = new Intent(this, AddActivity.class);
-        startActivityForResult(intent,REQUEST_CODE_ADD_CONTACT);
+        startActivityForResult(intent, ADD_VEHICLE_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case REQUEST_CODE_ADD_CONTACT:
+            case ADD_VEHICLE_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
                     Veiculo newVeiculo = (Veiculo) data.getSerializableExtra(AddActivity.NEW_VEHICLE);
                     if (!(gestorVeiculos.getVeiculos().contains(newVeiculo)))

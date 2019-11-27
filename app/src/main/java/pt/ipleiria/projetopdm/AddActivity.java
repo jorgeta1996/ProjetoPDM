@@ -8,10 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -27,11 +25,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -47,8 +43,8 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class AddActivity extends AppCompatActivity {
 
     public static final String NEW_VEHICLE = "NEWVEHICLE";
-    public static final int GALLERY_REQUEST_CODE_ADD = 1;
-    public static final int REQUEST_TAKE_PHOTO = 2;
+    public static final int GALLERY_REQUEST_CODE = 1;
+    public static final int CAMERA_REQUEST_CODE = 2;
     private boolean read;
 
     private SpinnerDialog spinnerDialog;
@@ -183,13 +179,13 @@ public class AddActivity extends AppCompatActivity {
     public void onClickButtonPicture(View view) {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
         if (cameraIntent.resolveActivity(this.getPackageManager()) != null) {
-            startActivityForResult(cameraIntent, REQUEST_TAKE_PHOTO);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
         }
     }
 
     public void onClickButtonGallery(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.txtSelectPhoto)), GALLERY_REQUEST_CODE_ADD);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.txtSelectPhoto)), GALLERY_REQUEST_CODE);
     }
 
     @Override
@@ -198,7 +194,7 @@ public class AddActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case GALLERY_REQUEST_CODE_ADD:
+                case GALLERY_REQUEST_CODE:
                     try {
                         Uri selectedImageUri = data.getData();
                         Glide.with(this)
@@ -213,7 +209,7 @@ public class AddActivity extends AppCompatActivity {
                         read = false;
                     }
                     break;
-                case REQUEST_TAKE_PHOTO:
+                case CAMERA_REQUEST_CODE:
                     try {
                         if (data != null && data.getExtras() != null) {
                             Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
