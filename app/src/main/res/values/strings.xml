@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ProjetoPDM</string>
-
+    <string name="drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="drawer_close" translatable="false">Close navigation drawer</string>
     <string-array name="classes">
         <item>Class A</item>
         <item>Class B</item>
