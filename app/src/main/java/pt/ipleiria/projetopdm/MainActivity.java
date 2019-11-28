@@ -1,16 +1,17 @@
 package pt.ipleiria.projetopdm;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
 import pt.ipleiria.projetopdm.recycler.RecyclerVehiclesAdapter;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,5 +75,10 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putSerializable(ESTADO_GESTOR_VEICULOS, gestorVeiculos);
 
+    }
+
+    public void onClickLista(View view) {
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
     }
 }

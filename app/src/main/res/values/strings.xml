@@ -400,4 +400,12 @@
     <string name="txtView_color">Color</string>
     <string name="onCancel">Cancelled</string>
     <string name="temporary">temporary</string>
+    <string name="home">Home</string>
+    <string name="Search">Search</string>
+    <string name="Add">Add</string>
+    <string name="Share">Share</string>
+    <string name="Feedback" translatable="false">Feedback</string>
+    <string name="Info">Information</string>
+    <string name="Leave">Leave</string>
+    <string name="About">About App</string>
 </resources>

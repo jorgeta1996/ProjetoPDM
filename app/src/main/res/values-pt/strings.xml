@@ -29,4 +29,11 @@
     <string name="txtView_color">Cor</string>
     <string name="onCancel">Cancelado</string>
     <string name="temporary">temporario</string>
+    <string name="home">Início</string>
+    <string name="Search">Procurar</string>
+    <string name="Add">Adicionar</string>
+    <string name="Share">Partilhar</string>
+    <string name="Info">Informação</string>
+    <string name="Leave">Sair</string>
+    <string name="About">Sobre a Aplicação</string>
 </resources>
