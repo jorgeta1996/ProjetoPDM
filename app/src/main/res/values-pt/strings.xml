@@ -36,4 +36,6 @@
     <string name="Info">Informação</string>
     <string name="Leave">Sair</string>
     <string name="About">Sobre a Aplicação</string>
+    <string name="Edit">Editar</string>
+    <string name="Delete">Eliminar</string>
 </resources>

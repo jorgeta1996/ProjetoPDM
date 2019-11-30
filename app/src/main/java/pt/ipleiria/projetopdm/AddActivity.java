@@ -23,6 +23,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 
 import java.io.File;
@@ -31,10 +35,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
@@ -63,6 +63,11 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+
+
+
+
 
         Spinner spinnerVehicle = findViewById(R.id.spinnerVehicle);
         textViewSpinnerDialog = findViewById(R.id.SpinnerMarcas);
@@ -288,6 +293,8 @@ public class AddActivity extends AppCompatActivity {
         });
         colorPicker.show();
     }
+
+
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {

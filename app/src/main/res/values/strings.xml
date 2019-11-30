@@ -409,4 +409,6 @@
     <string name="Info">Information</string>
     <string name="Leave">Leave</string>
     <string name="About">About App</string>
+    <string name="Edit">Edit</string>
+    <string name="Delete">Delete</string>
 </resources>

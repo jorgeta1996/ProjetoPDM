@@ -11,11 +11,12 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.io.File;
 import java.io.FileInputStream;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import pt.ipleiria.projetopdm.R;
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
@@ -37,6 +38,7 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
     @Override
     public VehiclesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = layoutInflater.inflate(R.layout.item_layout, parent, false);
+
         return new VehiclesHolder(itemView,this);
     }
 
@@ -46,6 +48,12 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         holder.textViewLicPlate.setText(mCurrent.getMatricula());
         holder.textViewMarca.setText(mCurrent.getMarca());
         holder.textViewModelo.setText(mCurrent.getModelo());
+        holder.textViewOwner.setText(mCurrent.getProprietario());
+        holder.textViewCountry.setText(mCurrent.getCountry());
+        holder.textViewcategory.setText(mCurrent.getCategoria());
+        holder.textViewColor.setBackgroundColor(mCurrent.getCor()); //(?)
+
+
 
         if (mCurrent.getPathPhoto().isEmpty()) {
             switch (mCurrent.getCategoria()){
@@ -86,6 +94,11 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         }
         holder.itemView.setLongClickable(true);
         holder.itemView.setClickable(true);
+
+
+
+
+
     }
 
     @Override
@@ -102,6 +115,12 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         public final TextView textViewMarca;
         public final TextView textViewModelo;
         public final ImageView imageView;
+        public final TextView textViewOwner;
+        public final TextView textViewCountry;
+        public final TextView textViewcategory;
+        public final TextView textViewColor;
+
+
         final RecyclerVehiclesAdapter mAdapter;
 
         public VehiclesHolder(@NonNull View itemView, RecyclerVehiclesAdapter adapter) {
@@ -110,6 +129,15 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             textViewMarca = itemView.findViewById(R.id.textViewMarca);
             textViewLicPlate = itemView.findViewById(R.id.textViewLicPlate);
             imageView = itemView.findViewById(R.id.imageView);
+            textViewOwner = itemView.findViewById(R.id.textViewOwner);
+            textViewCountry = itemView.findViewById(R.id.textViewCountry);
+            textViewcategory = itemView.findViewById(R.id.textViewCategory);
+            textViewColor = itemView.findViewById(R.id.textViewColor);
+
+
+
+
+
             this.mAdapter = adapter;
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -131,5 +159,7 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             //POR FAZER
             return false;
         }
+
+
     }
 }
