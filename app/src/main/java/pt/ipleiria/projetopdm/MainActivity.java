@@ -6,6 +6,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -45,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -224,5 +223,9 @@ public class MainActivity extends AppCompatActivity {
     public void onClickLista(View view) {
         Intent intent = new Intent(this, ListActivity.class);
         startActivity(intent);
+    }
+
+    public void onClickCardView(View view){
+        Toast.makeText(this, "TESTE", Toast.LENGTH_SHORT).show();
     }
 }

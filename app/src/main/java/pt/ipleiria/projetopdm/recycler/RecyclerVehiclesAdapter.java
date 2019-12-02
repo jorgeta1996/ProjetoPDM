@@ -131,7 +131,7 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             imageView = itemView.findViewById(R.id.imageView);
             textViewOwner = itemView.findViewById(R.id.textViewOwner);
             textViewCountry = itemView.findViewById(R.id.textViewCountry);
-            textViewcategory = itemView.findViewById(R.id.textViewCategory);
+            textViewcategory = itemView.findViewById(R.id.textViewClass);
             textViewColor = itemView.findViewById(R.id.textViewColor);
 
 
