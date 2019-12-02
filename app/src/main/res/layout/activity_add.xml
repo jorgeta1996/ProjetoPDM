@@ -1,253 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<!--    <include-->
+<!--        layout="@layout/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="5dp"
-        android:background="#FFFFFF">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewOwner"
+        <include
+            layout="@layout/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/textViewOwner"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/editTextOwner"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/editTextOwner"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textViewCountry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/country"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/SpinnerCountries"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="onClickSpinnerCountries"
-                android:text="@string/textView_SpinnerCountries"
-                android:textColor="#241B1B"
-                android:textSize="17sp" />
-
-            <ImageButton
-                android:id="@+id/buttonSpinnerCountries"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00FFFFFF"
-                android:contentDescription="@string/textView_Make"
-                android:onClick="onClickSpinnerCountries"
-                app:srcCompat="@drawable/ic_arrow_dropdown" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textViewPlate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/licensePlateString"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/editTextPlate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hintMatricula"
-                android:importantForAutofill="no"
-                android:inputType="textPersonName"
-                android:textAlignment="textStart"
-                android:textAllCaps="true" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textViewCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/category"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/spinnerVehicle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/classes" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView_Marca"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="@string/textView_Make"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/SpinnerMarcas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center|start"
-                android:onClick="onClickSpinnerMarcas"
-                android:text="@string/textView_SpinnerMarcas"
-                android:textColor="#241B1B"
-                android:textSize="17sp" />
-
-            <ImageButton
-                android:id="@+id/buttonSpinnerMarcas"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="#00FFFFFF"
-                android:contentDescription="@string/textView_Make"
-                android:onClick="onClickSpinnerMarcas"
-                app:srcCompat="@drawable/ic_arrow_dropdown" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView_Model"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="@string/textview_model"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/editTextModel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/textview_model"
-                android:importantForAutofill="no"
-                android:inputType="textPersonName" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:text="@string/txtView_color"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/buttonColor"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:onClick="onClickBtnColor" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageVehicle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00B73A3A"
-                android:contentDescription="@string/class_image"
-                app:srcCompat="@drawable/classe_a" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/textViewOwner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textViewOwner"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editTextOwner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/editTextOwner"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName" />
+
+                <TextView
+                    android:id="@+id/textViewCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/country"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/SpinnerCountries"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="onClickSpinnerCountries"
+                        android:text="@string/textView_SpinnerCountries"
+                        android:textColor="#241B1B"
+                        android:textSize="17sp" />
+
+                    <ImageButton
+                        android:id="@+id/buttonSpinnerCountries"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:contentDescription="@string/textView_Make"
+                        android:onClick="onClickSpinnerCountries"
+                        app:srcCompat="@drawable/ic_arrow_dropdown" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewPlate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/licensePlateString"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editTextPlate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hintMatricula"
+                        android:importantForAutofill="no"
+                        android:inputType="textPersonName"
+                        android:textAlignment="textStart"
+                        android:textAllCaps="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/category"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerVehicle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/classes" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView_Marca"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/textView_Make"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/SpinnerMarcas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center|start"
+                        android:onClick="onClickSpinnerMarcas"
+                        android:text="@string/textView_SpinnerMarcas"
+                        android:textColor="#241B1B"
+                        android:textSize="17sp" />
+
+                    <ImageButton
+                        android:id="@+id/buttonSpinnerMarcas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="#00FFFFFF"
+                        android:contentDescription="@string/textView_Make"
+                        android:onClick="onClickSpinnerMarcas"
+                        app:srcCompat="@drawable/ic_arrow_dropdown" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView_Model"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/textview_model"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editTextModel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/textview_model"
+                        android:importantForAutofill="no"
+                        android:inputType="textPersonName" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center"
+                        android:text="@string/txtView_color"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/buttonColor"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:onClick="onClickBtnColor" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageVehicle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00B73A3A"
+                        android:contentDescription="@string/class_image"
+                        app:srcCompat="@drawable/classe_a" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/buttonAddPhotoCamera"
+                            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onClickButtonPicture"
+                            android:text="@string/buttonPicture" />
+
+                        <Button
+                            android:id="@+id/buttonAddPhotoGallery"
+                            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onClickButtonGallery"
+                            android:text="@string/buttonGallery" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <Button
-                    android:id="@+id/buttonAddPhotoCamera"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:id="@+id/buttonAddVehicle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onClickButtonPicture"
-                    android:text="@string/buttonPicture" />
+                    android:layout_gravity="center"
+                    android:onClick="onClickButtonAdd"
+                    android:text="@string/add" />
 
-                <Button
-                    android:id="@+id/buttonAddPhotoGallery"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onClickButtonGallery"
-                    android:text="@string/buttonGallery" />
             </LinearLayout>
 
-        </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonAddVehicle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="onClickButtonAdd"
-            android:text="@string/add" />
+        </ScrollView>
+
     </LinearLayout>
 
-</ScrollView>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nvView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_view" />
+</androidx.drawerlayout.widget.DrawerLayout>
+
+
