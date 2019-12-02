@@ -218,10 +218,4 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
-
-
-    public void onClickLista(View view) {
-        Intent intent = new Intent(this, ListActivity.class);
-        startActivity(intent);
-    }
 }
