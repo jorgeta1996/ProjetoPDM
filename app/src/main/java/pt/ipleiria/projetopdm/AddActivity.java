@@ -47,12 +47,21 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class AddActivity extends AppCompatActivity {
 
+    /**
+     * Constantes
+     */
     public static final String NEW_VEHICLE = "NEWVEHICLE";
     public static final int GALLERY_REQUEST_CODE = 1;
     public static final int CAMERA_REQUEST_CODE = 2;
+
+    /**
+     * Variável de verificação
+     */
     private boolean read;
 
-    private SpinnerDialog spinnerDialog;
+    /**
+     * Variáveis para um Veículo
+     */
     private ArrayList<String> items;
     private TextView textViewSpinnerDialog;
     private TextView textViewSpinnerCountriesDialog;
@@ -63,36 +72,40 @@ public class AddActivity extends AppCompatActivity {
     private int cor;
     private String pathPhoto;
 
+    private SpinnerDialog spinnerDialog;
 
+    /**
+     * Variáveis para Toolbar
+     */
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
 
+    /**
+     * Método onCreate
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-
-
-
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /** Toolbar **/
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        mDrawer = findViewById(R.id.drawer_layout);
+        nvDrawer = findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
         drawerToggle.syncState();
         mDrawer.addDrawerListener(drawerToggle);
 
-
+        /** Instanciamento das variáveis para o construtor Veiculo **/
         Spinner spinnerVehicle = findViewById(R.id.spinnerVehicle);
         textViewSpinnerDialog = findViewById(R.id.SpinnerMarcas);
         textViewSpinnerCountriesDialog = findViewById(R.id.SpinnerCountries);
@@ -102,7 +115,7 @@ public class AddActivity extends AppCompatActivity {
         btnCor.setBackgroundColor(Color.RED);
         cor = Color.RED;
 
-
+        /** Criação do spinner da categoria do veículo **/
         spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -145,6 +158,7 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+        /** Persistência de dados **/
         if(savedInstanceState!=null){
             textViewSpinnerDialog.setText(savedInstanceState.getString("mMarca"));
             textViewSpinnerCountriesDialog.setText(savedInstanceState.getString("mCountry"));
@@ -159,20 +173,38 @@ public class AddActivity extends AppCompatActivity {
 
             }
         }
-
-
-
-
-
-
     }
 
+    /**
+     * Persistência de dados
+     */
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("mMarca",textViewSpinnerDialog.getText().toString());
+        outState.putString("mCountry",textViewSpinnerCountriesDialog.getText().toString());
+        outState.putBoolean("mRead",read);
+        if (read) {
+            pathPhoto = getString(R.string.temporary) + ".jpg";
+            saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
+            outState.putString("mFoto",pathPhoto);
+        }
+    }
+
+    /**
+     * Adicionar menu
+     * @param menu Menu para adicionar
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 
+    /**
+     * Criação de um Dialog para mostrar informação
+     * @param item Item para clicar
+     */
     public void onClickInfo(MenuItem item) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setMessage(R.string.icon_infoText);
@@ -185,9 +217,11 @@ public class AddActivity extends AppCompatActivity {
 
         dialog.create();
         dialog.show();
-
     }
 
+    /**
+     * Método onClick para criação do spinner das Marcas
+     */
     public void onClickSpinnerMarcas(View view) {
         spinnerDialog = new SpinnerDialog(AddActivity.this, items, getString(R.string.textViewSpinnerDialog));
         spinnerDialog.showSpinerDialog();
@@ -199,6 +233,9 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método onClick para criação do spinner dos Países
+     */
     public void onClickSpinnerCountries(View view) {
         ArrayList<String> countries = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.countries)));
         spinnerDialog = new SpinnerDialog(AddActivity.this, countries, getString(R.string.textViewSpinnerDialog));
@@ -211,6 +248,9 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método onClick para ligar a câmera e tirar foto
+     */
     public void onClickButtonPicture(View view) {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
         if (cameraIntent.resolveActivity(this.getPackageManager()) != null) {
@@ -218,11 +258,17 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método onClick para aceder à galeria e escolher uma imagem
+     */
     public void onClickButtonGallery(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(Intent.createChooser(intent, getString(R.string.txtSelectPhoto)), GALLERY_REQUEST_CODE);
     }
 
+    /**
+     * Método para executar os intents
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -259,10 +305,12 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método onClick para adicionar um veículo
+     */
     public void onClickButtonAdd(View view) {
         EditText editTextOwner = findViewById(R.id.editTextOwner);
         EditText editTextPlate = findViewById(R.id.editTextPlate);
-
         String owner = editTextOwner.getText().toString();
         String licensePlate = editTextPlate.getText().toString().trim();
         String country = textViewSpinnerCountriesDialog.getText().toString();
@@ -283,6 +331,17 @@ public class AddActivity extends AppCompatActivity {
             pathPhoto = licensePlate + ".jpg";
             saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
         }
+        /**
+         * Construtor do veiculo
+         * @param brand Marca do veiculo
+         * @param model Modelo do veiculo
+         * @param licensePlate Matricula do veiculo
+         * @param pathPhoto Caminho para foto do veiculo
+         * @param owner Proprietario do veiculo
+         * @param color Cor do veiculo
+         * @param category Categoria do veiculo
+         * @param country País da matricula do veiculo
+         */
         Veiculo veiculo = new Veiculo(brand,model,licensePlate,pathPhoto,owner,color,category,country);
 
 
@@ -322,19 +381,6 @@ public class AddActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putString("mMarca",textViewSpinnerDialog.getText().toString());
-        outState.putString("mCountry",textViewSpinnerCountriesDialog.getText().toString());
-        outState.putBoolean("mRead",read);
-        if (read) {
-            pathPhoto = getString(R.string.temporary) + ".jpg";
-            saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
-            outState.putString("mFoto",pathPhoto);
-        }
-    }
 
 
 
