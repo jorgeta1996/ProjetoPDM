@@ -224,8 +224,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListActivity.class);
         startActivity(intent);
     }
-
-    public void onClickCardView(View view){
-        Toast.makeText(this, "TESTE", Toast.LENGTH_SHORT).show();
-    }
 }

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -38,7 +39,6 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
     @Override
     public VehiclesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = layoutInflater.inflate(R.layout.item_layout, parent, false);
-
         return new VehiclesHolder(itemView,this);
     }
 
@@ -52,6 +52,8 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         holder.textViewCountry.setText(mCurrent.getCountry());
         holder.textViewcategory.setText(mCurrent.getCategoria());
         holder.textViewColor.setBackgroundColor(mCurrent.getCor()); //(?)
+
+
 
 
 
@@ -119,6 +121,8 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         public final TextView textViewCountry;
         public final TextView textViewcategory;
         public final TextView textViewColor;
+        public final LinearLayout layoutExpand;
+
 
 
         final RecyclerVehiclesAdapter mAdapter;
@@ -133,10 +137,8 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             textViewCountry = itemView.findViewById(R.id.textViewCountry);
             textViewcategory = itemView.findViewById(R.id.textViewClass);
             textViewColor = itemView.findViewById(R.id.textViewColor);
-
-
-
-
+            layoutExpand  = itemView.findViewById(R.id.linearLayout_expansivo);
+            layoutExpand.setVisibility(View.GONE);
 
             this.mAdapter = adapter;
             itemView.setOnClickListener(this);
@@ -146,6 +148,12 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         @Override
         public void onClick(View view) {
             //POR FAZER
+            if (layoutExpand.getVisibility() != View.VISIBLE){
+                layoutExpand.setVisibility(View.VISIBLE);
+
+            }else{
+                layoutExpand.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -156,7 +164,7 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
 
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
-            //POR FAZER
+
             return false;
         }
 
