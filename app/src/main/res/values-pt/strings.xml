@@ -38,4 +38,8 @@
     <string name="About">Sobre a Aplicação</string>
     <string name="Edit">Editar</string>
     <string name="Delete">Eliminar</string>
+    <string name="txtRemove">Remover</string>
+    <string name="txtConfirmRemove">Querremover este veículo?</string>
+    <string name="txtConfirmYes">Sim</string>
+    <string name="txtConfirmNo">Não</string>
 </resources>

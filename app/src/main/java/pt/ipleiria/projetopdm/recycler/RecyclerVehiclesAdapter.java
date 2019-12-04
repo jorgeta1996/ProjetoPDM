@@ -1,6 +1,7 @@
 package pt.ipleiria.projetopdm.recycler;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
@@ -147,7 +149,6 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
 
         @Override
         public void onClick(View view) {
-            //POR FAZER
             if (layoutExpand.getVisibility() != View.VISIBLE){
                 layoutExpand.setVisibility(View.VISIBLE);
 
@@ -158,14 +159,44 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
 
         @Override
         public boolean onLongClick(View view) {
-            //POR FAZER
-            return false;
+            PopupMenu popup = new PopupMenu(view.getContext(), view);
+            popup.getMenuInflater().inflate(R.menu.menu_item, popup.getMenu());
+            popup.setOnMenuItemClickListener(this);
+            popup.show();
+            return true;
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
+            itemPosition = getLayoutPosition();
+            switch(menuItem.getItemId()){
+                case R.id.itemDelete:
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                    dialog.setTitle(context.getString(R.string.txtRemove));
+                    dialog.setMessage(context.getString(R.string.txtConfirmRemove));
 
-            return false;
+                    dialog.setPositiveButton(context.getString(R.string.txtConfirmYes), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            String path= gestorVeiculos.getVeiculos().get(itemPosition).getPathPhoto();
+                            if (path!="") {
+                                File f=new File(context.getFilesDir() + "/" + path);
+                                f.delete();
+                            }
+                            gestorVeiculos.removerVeiculo(itemPosition);
+
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    });
+
+                    dialog.setNegativeButton(context.getString(R.string.txtConfirmNo), null);
+                    dialog.show();
+                    break;
+                case R.id.itemEdit:
+                    //POR FAZER
+
+
+            }
+            return true;
         }
 
 

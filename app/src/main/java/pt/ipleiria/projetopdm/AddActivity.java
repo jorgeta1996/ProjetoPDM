@@ -380,10 +380,6 @@ public class AddActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {

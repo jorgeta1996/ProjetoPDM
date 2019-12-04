@@ -411,4 +411,8 @@
     <string name="About">About App</string>
     <string name="Edit">Edit</string>
     <string name="Delete">Delete</string>
+    <string name="txtRemove">Remove</string>
+    <string name="txtConfirmRemove">Do you want to remove this vehicle?</string>
+    <string name="txtConfirmYes">Yes</string>
+    <string name="txtConfirmNo">No</string>
 </resources>
