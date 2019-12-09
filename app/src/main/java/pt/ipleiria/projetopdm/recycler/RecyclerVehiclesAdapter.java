@@ -203,9 +203,6 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
                     mAdapter.notifyDataSetChanged();;
 
 
-
- ;
-
                     break;
                 case R.id.itemShare:
 //                    Intent sendIntent = new Intent();

@@ -2,12 +2,15 @@ package pt.ipleiria.projetopdm;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import pt.ipleiria.projetopdm.modelo.Veiculo;
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -15,14 +18,15 @@ public class EditActivity extends AppCompatActivity {
     private EditText editText_Matricula;
     private EditText editText_Owner;
     private EditText editText_Model;
+    private Button btnCor;
 
     private TextView textViewSpinnerMaker;
     private TextView textViewSpinnerCountriesDialog;
 
 //    private ImageView imageVehicle;
 //
-//    private Button btnCor;
-//    private int cor;
+
+     private int cor;
 //    private String pathPhoto;
 
     public static final String EDIT_CONTACT = "EDITVEHICLE";
@@ -43,6 +47,8 @@ public class EditActivity extends AppCompatActivity {
         editText_Owner.setText(v.getProprietario());
         editText_Model= findViewById(R.id.editTextModelEdit);
         editText_Model.setText(v.getModelo());
+        btnCor = findViewById(R.id.buttonColorEdit);
+        btnCor.setBackgroundColor(v.getCor());
 
 
 
@@ -79,6 +85,19 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void onClickBtnColorEdit(View view) {
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, cor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+                Toast.makeText(EditActivity.this, getString(R.string.onCancel), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                btnCor.setBackgroundColor(color);
+                cor=color;
+            }
+        });
+        colorPicker.show();
     }
 
     public void onClickSpinnerMarcasEdit(View view) {
