@@ -1,5 +1,6 @@
 package pt.ipleiria.projetopdm;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class EditActivity extends AppCompatActivity {
     private Button btnCor;
 
     private TextView textViewSpinnerMaker;
+
     private TextView textViewSpinnerCountriesDialog;
 
 //    private ImageView imageVehicle;
@@ -56,6 +58,7 @@ public class EditActivity extends AppCompatActivity {
 
 
     public static final String EDIT_CONTACT = "EDITVEHICLE";
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +66,9 @@ public class EditActivity extends AppCompatActivity {
 
 
 
+
+        /** Instanciamento das variáveis para o construtor Veiculo e pré-preenchiimento dos campos editáveis**/
         Veiculo v = (Veiculo) getIntent().getSerializableExtra(MainActivity.VEICULO);
-
-
-
         editText_Matricula = findViewById(R.id.editTextPlateEdit);
         editText_Matricula.setText(v.getMatricula());
         editText_Owner = findViewById(R.id.editTextOwnerEdit);
@@ -75,6 +77,7 @@ public class EditActivity extends AppCompatActivity {
         editText_Model.setText(v.getModelo());
         btnCor = findViewById(R.id.buttonColorEdit);
         btnCor.setBackgroundColor(v.getCor());
+
 
 
 
@@ -228,5 +231,6 @@ public class EditActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+    /**-------------------------------------- /Métodos para a Navigation Drawer-------------------------------**/
 
 }
