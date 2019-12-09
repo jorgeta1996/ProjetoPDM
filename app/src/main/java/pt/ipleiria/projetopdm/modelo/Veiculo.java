@@ -1,10 +1,10 @@
 package pt.ipleiria.projetopdm.modelo;
 
-import android.widget.ImageView;
 
-import java.io.Serializable;
 
 import androidx.annotation.NonNull;
+
+import java.io.Serializable;
 
 public class Veiculo implements Serializable, Comparable<Veiculo>  {
 

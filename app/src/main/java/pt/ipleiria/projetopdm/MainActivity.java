@@ -148,8 +148,12 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    public void selectDrawerItem(MenuItem menuItem) {
 
+    /**
+     * Escolha da atividade selecionada na Drawer Navigation
+     * @param menuItem
+     */
+    public void selectDrawerItem(MenuItem menuItem) {
         switch(menuItem.getItemId()) {
             case R.id.nav_home:
                 Intent i1 = new Intent(this, MainActivity.class);
@@ -169,10 +173,26 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_feedback:
 //                Intent i5 = new Intent(this, MainActivity.class);
-//                startActivity(i5);
-                Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_EMAIL);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//Min SDK 15
-                startActivity(intent);
+//                startActivity(i5);/////////////
+//                Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_EMAIL);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//Min SDK 15
+//                startActivity(intent);
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"licenseplateeec@gmail.com"});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback!");
+
+                try {
+                    startActivity(Intent.createChooser(intent, "How to send mail?"));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    //do something else
+                }
+
+
+
+
+
                 break;
             case R.id.nav_info:
 //                Intent i6 = new Intent(this, MainActivity.class);
