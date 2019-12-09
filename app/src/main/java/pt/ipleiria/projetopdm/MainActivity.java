@@ -37,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerVehiclesAdapter mAdapter;
 
     public static final int ADD_VEHICLE_REQUEST_CODE = 1;
+    public static final int EDIT_VEHICLE_REQUEST_CODE = 2;
     private static final String ESTADO_GESTOR_VEICULOS = "ESTADO_GESTOR_VEICULOS";
+    public static final String VEICULO = "veiculo";
 
 
     @Override
@@ -82,7 +84,10 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-
+    /**
+     * Apagar mais tarde
+     * @param view
+     */
     public void onClickAddVehicle(View view) {
         Intent intent = new Intent(this, AddActivity.class);
         startActivityForResult(intent, ADD_VEHICLE_REQUEST_CODE);
@@ -102,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
                     mAdapter.notifyDataSetChanged();
                 }
                 break;
-//            case REQUEST_CODE_UPDATE_CONTACT:
-//                if (resultCode == RESULT_OK) {
-//                    Contacto updateContact = (Contacto) data.getSerializableExtra(UpdateActivity.UPDATE_CONTACT);
-//                    gestorContactos.atualizarContacto(mAdapter.getmPosition(), updateContact);
-//                    mAdapter.notifyDataSetChanged();
-//                }
+            case EDIT_VEHICLE_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    Veiculo editVehicle = (Veiculo) data.getSerializableExtra(EditActivity.EDIT_CONTACT);
+                    gestorVeiculos.atualizarVeiculo(mAdapter.getItemPosition(), editVehicle);
+                    mAdapter.notifyDataSetChanged();
+                }
         }
     }
 

@@ -2,9 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/itemDelete"
-        android:title="@string/Delete" />
-    <item
         android:id="@+id/itemEdit"
         android:title="@string/Edit" />
+    <item
+        android:id="@+id/itemShare"
+        android:title="@string/Share" />
+    <item
+        android:id="@+id/itemDelete"
+        android:title="@string/Delete" />
+
 </menu>

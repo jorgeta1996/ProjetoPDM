@@ -1,7 +1,9 @@
 package pt.ipleiria.projetopdm.recycler;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -20,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.File;
 import java.io.FileInputStream;
 
+import pt.ipleiria.projetopdm.EditActivity;
+import pt.ipleiria.projetopdm.MainActivity;
 import pt.ipleiria.projetopdm.R;
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
@@ -192,8 +196,27 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
                     dialog.show();
                     break;
                 case R.id.itemEdit:
-                    //POR FAZER
 
+                    Intent iUpdate = new Intent(context, EditActivity.class);
+                    iUpdate.putExtra(MainActivity.VEICULO, gestorVeiculos.obterVeiculo(itemPosition));
+                    ((Activity)context).startActivityForResult(iUpdate, MainActivity.EDIT_VEHICLE_REQUEST_CODE);
+                    mAdapter.notifyDataSetChanged();;
+
+
+
+ ;
+
+                    break;
+                case R.id.itemShare:
+//                    Intent sendIntent = new Intent();
+//                    sendIntent.setAction(Intent.ACTION_SEND);
+//                    sendIntent.putExtra(Intent.EXTRA_TEXT,);
+//                    sendIntent.setType("text/plain");
+//
+//                    Intent shareIntent = Intent.createChooser(sendIntent, null);
+//                    startActivity(shareIntent);
+
+                    break;
 
             }
             return true;

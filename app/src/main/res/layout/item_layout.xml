@@ -199,32 +199,32 @@
                 android:layout_height="20dp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
 
-            <Button
-                android:id="@+id/buttonEditar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Edit" />
+<!--            <Button-->
+<!--                android:id="@+id/buttonEditar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@string/Edit" />-->
 
-            <Button
-                android:id="@+id/buttonShare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Share" />
+<!--            <Button-->
+<!--                android:id="@+id/buttonShare"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@string/Share" />-->
 
-            <Button
-                android:id="@+id/buttonEliminar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Delete" />
-        </LinearLayout>
+<!--            <Button-->
+<!--                android:id="@+id/buttonEliminar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@string/Delete" />-->
+<!--        </LinearLayout>-->
 
     </LinearLayout>
 </LinearLayout>
