@@ -380,6 +380,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
 
+  /**--------------------------------------Métodos para a Navigation Drawer-------------------------------**/
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {

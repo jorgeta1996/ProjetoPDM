@@ -1,13 +1,21 @@
 package pt.ipleiria.projetopdm;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
 
 import pt.ipleiria.projetopdm.modelo.Veiculo;
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -28,6 +36,24 @@ public class EditActivity extends AppCompatActivity {
 
      private int cor;
 //    private String pathPhoto;
+
+
+
+
+
+
+
+
+    /**
+     * Variáveis para Toolbar
+     */
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvDrawer;
+    private ActionBarDrawerToggle drawerToggle;
+
+
+
 
     public static final String EDIT_CONTACT = "EDITVEHICLE";
     @Override
@@ -69,6 +95,29 @@ public class EditActivity extends AppCompatActivity {
 //                imageView.setImageResource(R.drawable.ic_no_photo);
 //            }
 //        }
+
+
+
+
+
+        /** Toolbar **/
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mDrawer = findViewById(R.id.drawer_layout);
+        nvDrawer = findViewById(R.id.nvView);
+        setupDrawerContent(nvDrawer);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mDrawer = findViewById(R.id.drawer_layout);
+        drawerToggle = setupDrawerToggle();
+        drawerToggle.syncState();
+        mDrawer.addDrawerListener(drawerToggle);
+
+
+
+
     }
 
 
@@ -102,4 +151,82 @@ public class EditActivity extends AppCompatActivity {
 
     public void onClickSpinnerMarcasEdit(View view) {
     }
+
+
+
+
+
+    /**--------------------------------------Métodos para a Navigation Drawer-------------------------------**/
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+
+    public void selectDrawerItem(MenuItem menuItem) {
+
+        switch(menuItem.getItemId()) {
+            case R.id.nav_home:
+                Intent i1 = new Intent(this, MainActivity.class);
+                startActivity(i1);
+                break;
+            case R.id.nav_search:
+//                Intent i2 = new Intent(this, MainActivity.class);
+//                startActivity(i2);
+                break;
+            case R.id.nav_add:
+                Intent i3 = new Intent(this, AddActivity.class);
+                startActivity(i3);
+                break;
+            case R.id.nav_share:
+//                Intent i4 = new Intent(this, MainActivity.class);
+//                startActivity(i4);
+                break;
+            case R.id.nav_feedback:
+//                Intent i5 = new Intent(this, MainActivity.class);
+//                startActivity(i5);
+                Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_EMAIL);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//Min SDK 15
+                startActivity(intent);
+                break;
+            case R.id.nav_info:
+//                Intent i6 = new Intent(this, MainActivity.class);
+//                startActivity(i6);
+                break;
+            case R.id.nav_leave:
+                finish();
+
+
+                break;
+
+            default:
+
+        }
+
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        mDrawer.closeDrawers();
+    }
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
 }
