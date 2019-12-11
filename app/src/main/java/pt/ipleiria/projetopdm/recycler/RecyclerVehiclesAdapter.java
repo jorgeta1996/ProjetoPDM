@@ -6,7 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +50,7 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         this.gestorVeiculos = gestorVeiculos;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
+
     }
 
     @NonNull
@@ -140,8 +144,8 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         public final Button mItemEdit;
         public final Button mItemShare;
 
+        public final RecyclerVehiclesAdapter mAdapter;
 
-        final RecyclerVehiclesAdapter mAdapter;
 
         public VehiclesHolder(@NonNull View itemView, RecyclerVehiclesAdapter adapter) {
             super(itemView);
@@ -157,7 +161,7 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             layoutExpand.setVisibility(View.GONE);
             checkbox = itemView.findViewById(R.id.checkBoxItem);
             checkbox.setVisibility(View.GONE);
-            longClick = false;
+
 
             mItemDelete = itemView.findViewById(R.id.buttonEliminar);
             mItemEdit = itemView.findViewById(R.id.buttonEditar);
@@ -202,6 +206,7 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
 
         @Override
         public void onClick(View view) {
+            itemPosition=getLayoutPosition();
             if (checkbox.getVisibility() != View.VISIBLE) {
                 if (layoutExpand.getVisibility() != View.VISIBLE) {
                     layoutExpand.setVisibility(View.VISIBLE);
@@ -233,13 +238,14 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             if (longClick) {
                 longClick = false;
                 listaVeiculos.clear();
+                notifyDataSetChanged();
             } else
                 longClick = true;
 
             return true;
         }
 
-        public void deleteVehicle(final int position){
+        private void deleteVehicle(final int position){
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             dialog.setTitle(context.getString(R.string.txtRemove));
             dialog.setMessage(context.getString(R.string.txtConfirmRemove));
@@ -261,4 +267,21 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             dialog.show();
         }
     }
+
+    public ArrayList<Veiculo> getListaVeiculos(){
+        return listaVeiculos;
+    }
+
+    public Veiculo getVeiculoByIndex(int index){
+        return listaVeiculos.get(index);
+    }
+
+    public void clearListaVeiculos(){
+        listaVeiculos.clear();
+        longClick=false;
+        for (int i = 0; i < gestorVeiculos.getVeiculos().size(); i++) {
+            checkBoxStates.put(i, false);
+        }
+    }
+
 }

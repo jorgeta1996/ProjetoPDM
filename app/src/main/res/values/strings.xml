@@ -412,7 +412,7 @@
     <string name="Edit">Edit</string>
     <string name="Delete">Delete</string>
     <string name="txtRemove">Remove</string>
-    <string name="txtConfirmRemove">Do you want to remove this vehicle?</string>
+    <string name="txtConfirmRemove">Are you sure you want to remove?</string>
     <string name="txtConfirmYes">Yes</string>
     <string name="txtConfirmNo">No</string>
     <string name="save">Save</string>

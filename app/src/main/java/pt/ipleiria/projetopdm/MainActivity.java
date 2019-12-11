@@ -1,16 +1,20 @@
 package pt.ipleiria.projetopdm;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,6 +22,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
@@ -47,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.syncState();
         mDrawer.addDrawerListener(drawerToggle);
 
-
         if (savedInstanceState == null) {
             this.gestorVeiculos = gestorVeiculos.getInstance();
 //            this.gestorVeiculos.lerFicheiro(this);
@@ -71,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mRecyclerView = findViewById(R.id.recyclerViewMain);
-        mAdapter = new RecyclerVehiclesAdapter(gestorVeiculos,this);
+        mAdapter = new RecyclerVehiclesAdapter(gestorVeiculos, this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Apagar mais tarde
+     *
      * @param view
      */
     public void onClickAddVehicle(View view) {
@@ -124,8 +132,41 @@ public class MainActivity extends AppCompatActivity {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        return super.onOptionsItemSelected(item);
 
+        switch (item.getItemId()){
+            case R.id.menuItemDelete:
+                if (!mAdapter.getListaVeiculos().isEmpty()) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                    dialog.setTitle(getString(R.string.txtRemove));
+                    dialog.setMessage(getString(R.string.txtConfirmRemove));
+
+                    dialog.setPositiveButton(getString(R.string.txtConfirmYes), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            for (int j=0;j<mAdapter.getListaVeiculos().size();j++) {
+                                String path = mAdapter.getListaVeiculos().get(j).getPathPhoto();
+                                if (path != "") {
+                                    File f = new File(getFilesDir() + "/" + path);
+                                    f.delete();
+                                }
+                                gestorVeiculos.removerVeiculo(gestorVeiculos.obterPosVeiculo(mAdapter.getVeiculoByIndex(j)));
+                                mAdapter.notifyDataSetChanged();
+                            }
+                            mAdapter.clearListaVeiculos();
+                        }
+                    });
+
+                    dialog.setNegativeButton(getString(R.string.txtConfirmNo), null);
+                    dialog.show();
+                }else{
+                    Toast.makeText(this, "Select an item", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            case R.id.menuItemShare:
+                //POR FAZER
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -143,10 +184,11 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Escolha da atividade selecionada na Drawer Navigation
+     *
      * @param menuItem
      */
     public void selectDrawerItem(MenuItem menuItem) {
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
             case R.id.nav_home:
                 Intent i1 = new Intent(this, MainActivity.class);
                 startActivity(i1);
@@ -172,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"licenseplateeec@gmail.com"});
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"licenseplateeec@gmail.com"});
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback!");
 
                 try {
@@ -182,16 +224,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-
-
-
                 break;
             case R.id.nav_info:
 //                Intent i6 = new Intent(this, MainActivity.class);
 //                startActivity(i6);
                 break;
             case R.id.nav_leave:
-            finish();
+                finish();
 
 
                 break;
@@ -204,8 +243,9 @@ public class MainActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
         mDrawer.closeDrawers();
     }
+
     private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
 
     @Override
@@ -220,4 +260,9 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_item,menu);
+        return true;
+    }
 }

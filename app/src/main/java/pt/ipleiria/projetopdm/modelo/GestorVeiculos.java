@@ -48,6 +48,10 @@ public class GestorVeiculos implements Serializable {
         veiculos.remove(pos);
     }
 
+    public int obterPosVeiculo(Veiculo veiculo){
+        return veiculos.indexOf(veiculo);
+    }
+
     @NonNull
     @Override
     public String toString() {

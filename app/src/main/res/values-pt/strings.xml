@@ -39,7 +39,7 @@
     <string name="Edit">Editar</string>
     <string name="Delete">Eliminar</string>
     <string name="txtRemove">Remover</string>
-    <string name="txtConfirmRemove">Querremover este veículo?</string>
+    <string name="txtConfirmRemove">Tem a certeza que quer remover?</string>
     <string name="txtConfirmYes">Sim</string>
     <string name="txtConfirmNo">Não</string>
     <string name="save">Guardar</string>
