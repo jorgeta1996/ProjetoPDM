@@ -171,7 +171,7 @@ public class EditActivity extends AppCompatActivity {
 
 
         imageVehicle = findViewById(R.id.imageVehicleEdit);
-        if (v.getPathPhoto().trim().isEmpty()) {
+        if (v.getPathPhoto().trim().isEmpty() ) {
             switch (v.getCategoria()) {
                 case "Class A":
                     imageVehicle.setImageResource(R.drawable.classe_a);
@@ -198,14 +198,11 @@ public class EditActivity extends AppCompatActivity {
                 File f = new File(this.getFilesDir() + "/" + v.getPathPhoto());
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
                 imageVehicle.setImageBitmap(b);
-            } catch (Exception e) {
+               } catch (Exception e) {
 
                 imageVehicle.setImageResource(R.drawable.ic_launcher_no_foreground);
             }
         }
-
-
-
 
 
 
