@@ -3,11 +3,14 @@ package pt.ipleiria.projetopdm;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 import pt.ipleiria.projetopdm.modelo.Veiculo;
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -28,6 +34,7 @@ public class EditActivity extends AppCompatActivity {
     private EditText editText_Owner;
     private EditText editText_Model;
     private Button btnCor;
+    private ImageView imageView;
 
     private TextView textViewSpinnerMaker;
 
@@ -77,27 +84,23 @@ public class EditActivity extends AppCompatActivity {
         editText_Model.setText(v.getModelo());
         btnCor = findViewById(R.id.buttonColorEdit);
         btnCor.setBackgroundColor(v.getCor());
+        imageView = findViewById(R.id.imageVehicleEdit);
+        textViewSpinnerMaker=findViewById(R.id.textView_MarcaEdit);
 
 
 
+        if (v.getPathPhoto().trim().isEmpty()) {
+            imageView.setImageResource(R.drawable.ic_launcher_no_foreground);
+        } else {
+            try {
+                File f = new File(this.getFilesDir() + "/" + v.getPathPhoto());
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                imageView.setImageBitmap(b);
+            } catch (Exception e) {
 
-
-
-//
-//
-//        imageView = findViewById(R.id.imageViewUpdate);
-//
-//        if (c.getPathPhoto().trim().isEmpty()) {
-//            imageView.setImageResource(R.drawable.ic_no_photo);
-//        } else {
-//            try {
-//                File f = new File(this.getFilesDir() + "/" + c.getPathPhoto());
-//                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-//                imageView.setImageBitmap(b);
-//            } catch (Exception e) {
-//                imageView.setImageResource(R.drawable.ic_no_photo);
-//            }
-//        }
+                imageView.setImageResource(R.drawable.ic_launcher_no_foreground);
+            }
+        }
 
 
 
