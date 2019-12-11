@@ -17,20 +17,21 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:contentDescription="@string/class_image"
                 app:srcCompat="@drawable/classe_d" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
+                android:layout_weight="1"
                 android:clipToPadding="false"
                 android:orientation="vertical">
 
@@ -52,7 +53,7 @@
                         android:id="@+id/textViewLicPlate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="center_vertical"
                         android:textAllCaps="true" />
                 </LinearLayout>
 
@@ -74,7 +75,7 @@
                         android:id="@+id/textViewMarca"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="0dp" />
+                        android:layout_gravity="center_vertical" />
 
                 </LinearLayout>
 
@@ -90,15 +91,23 @@
                         android:layout_marginEnd="5dp"
                         android:text="@string/textview_model"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/textViewModelo"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
             </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/checkBoxItem"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -199,32 +208,35 @@
                 android:layout_height="20dp" />
         </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-<!--            <Button-->
-<!--                android:id="@+id/buttonEditar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="@string/Edit" />-->
+            <Button
+                android:id="@+id/buttonEditar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Edit"
+                android:onClick="onClickItemEdit"/>
 
-<!--            <Button-->
-<!--                android:id="@+id/buttonShare"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="@string/Share" />-->
+            <Button
+                android:id="@+id/buttonShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Share"
+                android:onClick="onClickItemShare"/>
 
-<!--            <Button-->
-<!--                android:id="@+id/buttonEliminar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="@string/Delete" />-->
-<!--        </LinearLayout>-->
+            <Button
+                android:id="@+id/buttonEliminar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Delete"
+                android:onClick="onClickItemDelete"/>
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

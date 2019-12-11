@@ -131,7 +131,6 @@ public class EditActivity extends AppCompatActivity {
                             imageVehicle.setImageResource(R.drawable.classe_d);
                         pathPhoto = "";
                         break;
-
                 }
             }
 
@@ -139,7 +138,6 @@ public class EditActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
 
 
         /**Pre-seleciona categoria para o spinner**/
@@ -210,9 +208,7 @@ public class EditActivity extends AppCompatActivity {
         drawerToggle.syncState();
         mDrawer.addDrawerListener(drawerToggle);
 
-
     }
-
 
     /**
      * Método onClick para criação do spinner das Marcas

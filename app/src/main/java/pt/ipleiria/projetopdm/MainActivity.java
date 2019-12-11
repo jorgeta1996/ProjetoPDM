@@ -6,6 +6,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -24,12 +26,10 @@ import pt.ipleiria.projetopdm.recycler.RecyclerVehiclesAdapter;
 public class MainActivity extends AppCompatActivity {
 
 
-
-
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
-         private ActionBarDrawerToggle drawerToggle;
+    private ActionBarDrawerToggle drawerToggle;
 
 
     private GestorVeiculos gestorVeiculos;
@@ -48,27 +48,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        mDrawer = findViewById(R.id.drawer_layout);
+        nvDrawer = findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
         drawerToggle.syncState();
         mDrawer.addDrawerListener(drawerToggle);
-
-
-
-
-
-
-
-
 
 
         if (savedInstanceState == null) {
@@ -82,7 +74,9 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new RecyclerVehiclesAdapter(gestorVeiculos,this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
+
 
     /**
      * Apagar mais tarde
@@ -124,22 +118,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
 
     }
-
 
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -232,4 +219,5 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
 }
