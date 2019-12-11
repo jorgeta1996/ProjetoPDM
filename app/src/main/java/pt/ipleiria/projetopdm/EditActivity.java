@@ -1,6 +1,5 @@
 package pt.ipleiria.projetopdm;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -72,7 +71,7 @@ public class EditActivity extends AppCompatActivity {
     public static final int GALLERY_REQUEST_CODE = 1;
     public static final int CAMERA_REQUEST_CODE = 2;
 
-    @SuppressLint("WrongViewCast")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,51 +91,16 @@ public class EditActivity extends AppCompatActivity {
         cor = v.getCor();
 
 
-
-        imageVehicle = findViewById(R.id.imageVehicleEdit);
-        if (v.getPathPhoto().trim().isEmpty()) {
-            switch (v.getCategoria()) {
-                case "Class A":
-                    imageVehicle.setImageResource(R.drawable.classe_a);
-                    pathPhoto = "";
-                    break;
-                case "Class B":
-                    imageVehicle.setImageResource(R.drawable.classe_b);
-                    pathPhoto = "";
-                    break;
-                case "Class C":
-                    imageVehicle.setImageResource(R.drawable.classe_c);
-                    pathPhoto = "";
-                    break;
-                case "Class D":
-                    imageVehicle.setImageResource(R.drawable.classe_d);
-                    pathPhoto = "";
-                    break;
-                default:
-                    imageVehicle.setImageResource(R.drawable.ic_launcher_no_foreground);
-                    break;
-            }
-        } else {
-            try {
-                File f = new File(this.getFilesDir() + "/" + v.getPathPhoto());
-                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                imageVehicle.setImageBitmap(b);
-            } catch (Exception e) {
-
-                imageVehicle.setImageResource(R.drawable.ic_launcher_no_foreground);
-            }
-        }
-
-
         textViewSpinnerDialog = findViewById(R.id.SpinnerMarcasEdit);
+        textViewSpinnerDialog.setText(v.getMarca());
 
         textViewSpinnerCountriesDialog = findViewById(R.id.SpinnerCountriesEdit);
+        textViewSpinnerCountriesDialog.setText(v.getCountry());
 
         /** Criação do spinner da categoria do veículo **/
         spinnerVehicle = findViewById(R.id.spinnerVehicleEdit);
         spinnerVehicle.setSelection(0);
         spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -196,6 +160,50 @@ public class EditActivity extends AppCompatActivity {
                 spinnerVehicle.setSelection(3);
                 break;
         }
+
+
+
+
+
+
+
+
+
+
+        imageVehicle = findViewById(R.id.imageVehicleEdit);
+        if (v.getPathPhoto().trim().isEmpty()) {
+            switch (v.getCategoria()) {
+                case "Class A":
+                    imageVehicle.setImageResource(R.drawable.classe_a);
+                    pathPhoto = "";
+                    break;
+                case "Class B":
+                    imageVehicle.setImageResource(R.drawable.classe_b);
+                    pathPhoto = "";
+                    break;
+                case "Class C":
+                    imageVehicle.setImageResource(R.drawable.classe_c);
+                    pathPhoto = "";
+                    break;
+                case "Class D":
+                    imageVehicle.setImageResource(R.drawable.classe_d);
+                    pathPhoto = "";
+                    break;
+                default:
+                    imageVehicle.setImageResource(R.drawable.ic_launcher_no_foreground);
+                    break;
+            }
+        } else {
+            try {
+                File f = new File(this.getFilesDir() + "/" + v.getPathPhoto());
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                imageVehicle.setImageBitmap(b);
+            } catch (Exception e) {
+
+                imageVehicle.setImageResource(R.drawable.ic_launcher_no_foreground);
+            }
+        }
+
 
 
 
