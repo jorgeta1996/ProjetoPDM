@@ -7,7 +7,10 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,11 +21,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
@@ -43,7 +48,7 @@ public class EditActivity extends AppCompatActivity {
     private EditText editText_Owner;
     private EditText editText_Model;
     private Button btnCor;
-    private ImageView imageView;
+    private ImageView imageVehicle;
     private String category;
     private ArrayList<String> items;
     private int cor;
@@ -52,6 +57,7 @@ public class EditActivity extends AppCompatActivity {
     private String pathPhoto;
     private TextView textViewSpinnerDialog;
     private TextView textViewSpinnerCountriesDialog;
+    private  Spinner spinnerVehicle;
 
     /**
      * Variáveis para Toolbar
@@ -62,7 +68,6 @@ public class EditActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
 
 
-    private int a=0;
     public static final String EDIT_VEHICLE = "EDITVEHICLE";
     public static final int GALLERY_REQUEST_CODE = 1;
     public static final int CAMERA_REQUEST_CODE = 2;
@@ -85,14 +90,47 @@ public class EditActivity extends AppCompatActivity {
         btnCor = findViewById(R.id.buttonColorEdit);
         btnCor.setBackgroundColor(v.getCor());
         cor = v.getCor();
-        imageView = findViewById(R.id.imageVehicleEdit);
 
 
-        final Spinner spinnerVehicle = findViewById(R.id.spinnerVehicleEdit);
+
+        imageVehicle = findViewById(R.id.imageVehicleEdit);
+        if (v.getPathPhoto().trim().isEmpty()) {
+            switch (v.getCategoria()) {
+                case "Class A":
+                    imageVehicle.setImageResource(R.drawable.classe_a);
+                    pathPhoto = "";
+                    break;
+                case "Class B":
+                    imageVehicle.setImageResource(R.drawable.classe_b);
+                    pathPhoto = "";
+                    break;
+                case "Class C":
+                    imageVehicle.setImageResource(R.drawable.classe_c);
+                    pathPhoto = "";
+                    break;
+                case "Class D":
+                    imageVehicle.setImageResource(R.drawable.classe_d);
+                    pathPhoto = "";
+                    break;
+                default:
+                    imageVehicle.setImageResource(R.drawable.ic_launcher_no_foreground);
+                    break;
+            }
+        } else {
+            try {
+                File f = new File(this.getFilesDir() + "/" + v.getPathPhoto());
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                imageVehicle.setImageBitmap(b);
+            } catch (Exception e) {
+
+                imageVehicle.setImageResource(R.drawable.ic_launcher_no_foreground);
+            }
+        }
+
+        spinnerVehicle = findViewById(R.id.spinnerVehicleEdit);
         spinnerVehicle.setSelection(0);
         textViewSpinnerDialog = findViewById(R.id.SpinnerMarcasEdit);
         textViewSpinnerCountriesDialog = findViewById(R.id.SpinnerCountriesEdit);
-
 
         /** Criação do spinner da categoria do veículo **/
         spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -106,14 +144,14 @@ public class EditActivity extends AppCompatActivity {
                         category = "Class A";
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
                         if (!read)
-                            imageView.setImageResource(R.drawable.classe_a);
+                            imageVehicle.setImageResource(R.drawable.classe_a);
                         pathPhoto = "";
                         break;
                     case 1:
                         category = "Class B";
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaCarros)));
                         if (!read)
-                            imageView.setImageResource(R.drawable.classe_b);
+                            imageVehicle.setImageResource(R.drawable.classe_b);
                         pathPhoto = "";
                         break;
                     case 2:
@@ -121,7 +159,7 @@ public class EditActivity extends AppCompatActivity {
                         //MUDAR LISTA
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
                         if (!read)
-                            imageView.setImageResource(R.drawable.classe_c);
+                            imageVehicle.setImageResource(R.drawable.classe_c);
                         pathPhoto = "";
                         break;
                     case 3:
@@ -129,7 +167,7 @@ public class EditActivity extends AppCompatActivity {
                         //MUDAR LISTA
                         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
                         if (!read)
-                            imageView.setImageResource(R.drawable.classe_d);
+                            imageVehicle.setImageResource(R.drawable.classe_d);
                         pathPhoto = "";
                         break;
 
@@ -143,51 +181,25 @@ public class EditActivity extends AppCompatActivity {
 
 
 
-//        if(v.getCategoria()=="Class A"){
-//            spinnerVehicle.setSelection(0);
-//        }
-//        else if(v.getCategoria()=="Class B"){
-//            spinnerVehicle.setSelection(1);
-//        }
-//        else if(v.getCategoria()=="Class C"){
-//            spinnerVehicle.setSelection(2);
-//        }
-//        else if(v.getCategoria()=="Class D"){
-//            spinnerVehicle.setSelection(3);
-//        }
-
-
-
-        if (v.getPathPhoto().trim().isEmpty()) {
-//            switch (v.getCategoria()) {
-//                case "Class A":
-//                    imageView.setImageResource(R.drawable.classe_a);
-//                    pathPhoto = "";
-//                    break;
-//                case "Class B":
-//                    imageView.setImageResource(R.drawable.classe_b);
-//                    pathPhoto = "";
-//                    break;
-//                case "Class C":
-//                    imageView.setImageResource(R.drawable.classe_c);
-//                    pathPhoto = "";
-//                    break;
-//                case "Class D":
-//                    imageView.setImageResource(R.drawable.classe_d);
-//                    pathPhoto = "";
-//                    break;
-//            }
-
-        } else {
-            try {
-                File f = new File(this.getFilesDir() + "/" + v.getPathPhoto());
-                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                imageView.setImageBitmap(b);
-            } catch (Exception e) {
-
-                imageView.setImageResource(R.drawable.ic_launcher_no_foreground);
-            }
+        /**Pre-seleciona categoria para o spinner**/
+        switch (v.getCategoria()) {
+            case "Class A":
+                spinnerVehicle.setSelection(0);
+                break;
+            case "Class B":
+                spinnerVehicle.setSelection(1);
+                break;
+            case "Class C":
+                spinnerVehicle.setSelection(2);
+                break;
+            case "Class D":
+                spinnerVehicle.setSelection(3);
+                break;
         }
+
+
+
+
 
         /** Toolbar **/
         toolbar = findViewById(R.id.toolbar);
@@ -250,11 +262,11 @@ public class EditActivity extends AppCompatActivity {
 
         if (read) {
 
-            File f=new File(this.getFilesDir() + "/" + pathPhoto);
+            File f = new File(this.getFilesDir() + "/" + pathPhoto);
             f.delete();
 
             pathPhoto = licensePlate + ".jpg";
-            saveImage(pathPhoto, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+            saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
         }
         /**
          * Construtor do veiculo
@@ -267,7 +279,7 @@ public class EditActivity extends AppCompatActivity {
          * @param category Categoria do veiculo
          * @param country País da matricula do veiculo
          */
-        Veiculo veiculo = new Veiculo(brand,model,licensePlate,pathPhoto,owner,color,category,country);
+        Veiculo veiculo = new Veiculo(brand, model, licensePlate, pathPhoto, owner, color, category, country);
 
 
         Intent returnIntent = new Intent();
@@ -282,6 +294,10 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void onClickButtonPictureEdit(View view) {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
+        if (cameraIntent.resolveActivity(this.getPackageManager()) != null) {
+            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+        }
     }
 
     public void onClickBtnColorEdit(View view) {
@@ -309,6 +325,42 @@ public class EditActivity extends AppCompatActivity {
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case GALLERY_REQUEST_CODE:
+                    try {
+                        Uri selectedImageUri = data.getData();
+                        Glide.with(this)
+                                .asBitmap()
+                                .load(selectedImageUri)
+                                .override(300, 300)
+                                .into(imageVehicle);
+                        read = true;
+
+                    } catch (Exception e) {
+                        Log.e("GestorVeiculos", getString(R.string.txtErrorFile), e);
+                        read = false;
+                    }
+                    break;
+                case CAMERA_REQUEST_CODE:
+                    try {
+                        if (data != null && data.getExtras() != null) {
+                            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                            imageVehicle.setImageBitmap(imageBitmap);
+                            read = true;
+                        }
+                    } catch (Exception e) {
+                        Log.e("GestorVeiculos", getString(R.string.txtErrorFile), e);
+                        read = false;
+                    }
+            }
         }
     }
 
