@@ -127,18 +127,18 @@ public class EditActivity extends AppCompatActivity {
             }
         }
 
-        spinnerVehicle = findViewById(R.id.spinnerVehicleEdit);
-        spinnerVehicle.setSelection(0);
+
         textViewSpinnerDialog = findViewById(R.id.SpinnerMarcasEdit);
+
         textViewSpinnerCountriesDialog = findViewById(R.id.SpinnerCountriesEdit);
 
         /** Criação do spinner da categoria do veículo **/
+        spinnerVehicle = findViewById(R.id.spinnerVehicleEdit);
+        spinnerVehicle.setSelection(0);
         spinnerVehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
                 switch (position) {
                     case 0:
                         category = "Class A";
