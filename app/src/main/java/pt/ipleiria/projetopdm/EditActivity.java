@@ -47,10 +47,11 @@ public class EditActivity extends AppCompatActivity {
     private EditText editText_Owner;
     private EditText editText_Model;
     private Button btnCor;
+    private int cor;
     private ImageView imageVehicle;
     private String category;
     private ArrayList<String> items;
-    private int cor;
+
     private SpinnerDialog spinnerDialog;
     private boolean read;
     private String pathPhoto;
@@ -89,14 +90,10 @@ public class EditActivity extends AppCompatActivity {
         btnCor = findViewById(R.id.buttonColorEdit);
         btnCor.setBackgroundColor(v.getCor());
         cor = v.getCor();
-
-
         textViewSpinnerDialog = findViewById(R.id.SpinnerMarcasEdit);
         textViewSpinnerDialog.setText(v.getMarca());
-
         textViewSpinnerCountriesDialog = findViewById(R.id.SpinnerCountriesEdit);
         textViewSpinnerCountriesDialog.setText(v.getCountry());
-
         /** Criação do spinner da categoria do veículo **/
         spinnerVehicle = findViewById(R.id.spinnerVehicleEdit);
         spinnerVehicle.setSelection(0);
@@ -161,15 +158,7 @@ public class EditActivity extends AppCompatActivity {
                 break;
         }
 
-
-
-
-
-
-
-
-
-
+        /** Seleciona imagem do veículo**/
         imageVehicle = findViewById(R.id.imageVehicleEdit);
         if (v.getPathPhoto().trim().isEmpty() ) {
             switch (v.getCategoria()) {
@@ -254,6 +243,10 @@ public class EditActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método que guarda os campos editáveis
+     * @param view
+     */
     public void onClickButtonEdit(View view) {
         EditText editTextOwner = findViewById(R.id.editTextOwnerEdit);
         EditText editTextPlate = findViewById(R.id.editTextPlateEdit);
@@ -293,11 +286,19 @@ public class EditActivity extends AppCompatActivity {
         finish();
     }
 
+
+    /**
+     * Método onClick para abrir a galeria e escolher uma foto
+     * @param view
+     */
     public void onClickButtonGalleryEdit(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(Intent.createChooser(intent, getString(R.string.txtSelectPhoto)), GALLERY_REQUEST_CODE);
     }
 
+    /**
+     * Método onClick para ligar a câmera e tirar foto
+     */
     public void onClickButtonPictureEdit(View view) {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
         if (cameraIntent.resolveActivity(this.getPackageManager()) != null) {
@@ -305,6 +306,10 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método para abrir o colorPicker para escolher a cor
+     * @param view
+     */
     public void onClickBtnColorEdit(View view) {
         AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, cor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
@@ -321,7 +326,11 @@ public class EditActivity extends AppCompatActivity {
         colorPicker.show();
     }
 
-
+    /**
+     * Método para guardar a imagem
+     * @param filename
+     * @param bitmap
+     */
     public void saveImage(String filename, Bitmap bitmap) {
         FileOutputStream outputStream;
         try {
