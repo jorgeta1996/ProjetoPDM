@@ -42,4 +42,5 @@
     <string name="txtConfirmRemove">Querremover este veículo?</string>
     <string name="txtConfirmYes">Sim</string>
     <string name="txtConfirmNo">Não</string>
+    <string name="save">Guardar</string>
 </resources>

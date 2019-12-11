@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case EDIT_VEHICLE_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    Veiculo editVehicle = (Veiculo) data.getSerializableExtra(EditActivity.EDIT_CONTACT);
+                    Veiculo editVehicle = (Veiculo) data.getSerializableExtra(EditActivity.EDIT_VEHICLE);
                     gestorVeiculos.atualizarVeiculo(mAdapter.getItemPosition(), editVehicle);
                     mAdapter.notifyDataSetChanged();
                 }

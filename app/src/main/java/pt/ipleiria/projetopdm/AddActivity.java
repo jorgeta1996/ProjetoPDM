@@ -158,6 +158,8 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+
+
         /** Persistência de dados **/
         if(savedInstanceState!=null){
             textViewSpinnerDialog.setText(savedInstanceState.getString("mMarca"));
@@ -452,4 +454,6 @@ public class AddActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
+    /**--------------------------------------  /Métodos para a Navigation Drawer-------------------------------**/
 }

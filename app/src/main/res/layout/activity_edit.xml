@@ -278,7 +278,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:onClick="onClickButtonEdit"
-                        android:text="@string/add" />
+                        android:text="@string/save" />
 
                 </LinearLayout>
 

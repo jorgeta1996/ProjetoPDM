@@ -415,4 +415,5 @@
     <string name="txtConfirmRemove">Do you want to remove this vehicle?</string>
     <string name="txtConfirmYes">Yes</string>
     <string name="txtConfirmNo">No</string>
+    <string name="save">Save</string>
 </resources>
