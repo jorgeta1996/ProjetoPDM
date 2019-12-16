@@ -84,17 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    /**
-     * Apagar mais tarde
-     *
-     * @param view
-     */
-    public void onClickAddVehicle(View view) {
-        Intent intent = new Intent(this, AddActivity.class);
-        startActivityForResult(intent, ADD_VEHICLE_REQUEST_CODE);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -164,6 +153,14 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.menuItemShare:
                 //POR FAZER
+                break;
+            case R.id.menuItemAdd:
+                Intent intentAdd = new Intent(this, AddActivity.class);
+                startActivityForResult(intentAdd, ADD_VEHICLE_REQUEST_CODE);
+                break;
+            case R.id.menuItemSearch:
+                Intent intentSearch = new Intent(this, SearchActivity.class);
+                startActivity(intentSearch);
                 break;
         }
         return super.onOptionsItemSelected(item);
