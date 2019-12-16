@@ -186,6 +186,7 @@ public class EditActivity extends AppCompatActivity {
                 File f = new File(this.getFilesDir() + "/" + v.getPathPhoto());
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
                 imageVehicle.setImageBitmap(b);
+                read=true;
                } catch (Exception e) {
 
                 imageVehicle.setImageResource(R.drawable.ic_launcher_no_foreground);
