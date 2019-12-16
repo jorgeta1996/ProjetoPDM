@@ -16,8 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        android:orientation="vertical">
-
         <include
             layout="@layout/toolbar"
             android:layout_width="match_parent"
@@ -26,7 +24,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:isScrollContainer="false">
+            android:isScrollContainer="false"
+            android:background="#FFFFFF">
 
             <FrameLayout
                 android:id="@+id/flContent"
@@ -38,7 +37,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:background="#FFFFFF"
                     android:orientation="vertical">
 
 
