@@ -221,7 +221,7 @@ public class SearchActivity extends AppCompatActivity {
         matriculas.clear();
         for (int i=0;i<gestorVeiculos.getVeiculos().size();i++){
 
-            matriculas.add("Matricula: " + gestorVeiculos.obterVeiculo(i).getMatricula() +"\nProprietario: " +gestorVeiculos.obterVeiculo(i).getProprietario());
+            matriculas.add("Matricula: " + gestorVeiculos.obterVeiculo(i).getMatricula() +"\nProprietario: " + gestorVeiculos.obterVeiculo(i).getProprietario());
         }
     }
 }
