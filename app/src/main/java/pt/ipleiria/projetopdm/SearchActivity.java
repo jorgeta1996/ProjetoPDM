@@ -142,18 +142,19 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(i1);
                 break;
             case R.id.nav_search:
-//                Intent i2 = new Intent(this, SearchActivity.class);
-//                startActivity(i2);
+                Intent i2 = new Intent(this, SearchActivity.class);
+                startActivity(i2);
                 break;
             case R.id.nav_add:
                 Intent i3 = new Intent(this, AddActivity.class);
-                startActivityForResult(i3,MainActivity.ADD_VEHICLE_REQUEST_CODE);
+                startActivity(i3);
                 break;
             case R.id.nav_share:
 //                Intent i4 = new Intent(this, MainActivity.class);
 //                startActivity(i4);
                 break;
             case R.id.nav_feedback:
+
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:")); // only email apps should handle this
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"licenseplateeec@gmail.com"});
@@ -173,10 +174,7 @@ public class SearchActivity extends AppCompatActivity {
                 break;
             case R.id.nav_leave:
                 finish();
-
-
                 break;
-
             default:
 
         }

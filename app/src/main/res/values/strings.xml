@@ -418,4 +418,6 @@
     <string name="save">Save</string>
     <string name="ChooseEmail">Choose e-mail APP</string>
     <string name="CantSendFeedback">Can\'t send feedback, try later!</string>
+    <string name="ContactUS">Contact us</string>
+    <string name="ContactUsByEmail">Contact us by e-mail</string>
 </resources>

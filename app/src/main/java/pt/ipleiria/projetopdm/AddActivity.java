@@ -400,7 +400,7 @@ public class AddActivity extends AppCompatActivity {
 
     public void selectDrawerItem(MenuItem menuItem) {
 
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
             case R.id.nav_home:
                 Intent i1 = new Intent(this, MainActivity.class);
                 startActivity(i1);
@@ -418,6 +418,7 @@ public class AddActivity extends AppCompatActivity {
 //                startActivity(i4);
                 break;
             case R.id.nav_feedback:
+
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:")); // only email apps should handle this
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"licenseplateeec@gmail.com"});
@@ -437,10 +438,7 @@ public class AddActivity extends AppCompatActivity {
                 break;
             case R.id.nav_leave:
                 finish();
-
-
                 break;
-
             default:
 
         }

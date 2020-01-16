@@ -197,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i1);
                 break;
             case R.id.nav_search:
-//                Intent i2 = new Intent(this, MainActivity.class);
-//                startActivity(i2);
+                Intent i2 = new Intent(this, SearchActivity.class);
+                startActivity(i2);
                 break;
             case R.id.nav_add:
                 Intent i3 = new Intent(this, AddActivity.class);
@@ -229,6 +229,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_leave:
                 finish();
+
+
                 break;
             default:
 
