@@ -416,4 +416,6 @@
     <string name="txtConfirmYes">Yes</string>
     <string name="txtConfirmNo">No</string>
     <string name="save">Save</string>
+    <string name="ChooseEmail">Choose e-mail APP</string>
+    <string name="CantSendFeedback">Can\'t send feedback, try later!</string>
 </resources>

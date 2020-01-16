@@ -3,6 +3,7 @@ package pt.ipleiria.projetopdm;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -153,11 +154,18 @@ public class SearchActivity extends AppCompatActivity {
 //                startActivity(i4);
                 break;
             case R.id.nav_feedback:
-//                Intent i5 = new Intent(this, MainActivity.class);
-//                startActivity(i5);
-                Intent intent = Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_EMAIL);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//Min SDK 15
-                startActivity(intent);
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"licenseplateeec@gmail.com"});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback!");
+
+                try {
+                    startActivity(Intent.createChooser(intent,getString(R.string.ChooseEmail)));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(this, getString(R.string.CantSendFeedback), Toast.LENGTH_LONG).show();
+                }
+
+
                 break;
             case R.id.nav_info:
 //                Intent i6 = new Intent(this, MainActivity.class);

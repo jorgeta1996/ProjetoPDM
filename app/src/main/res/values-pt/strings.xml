@@ -43,4 +43,6 @@
     <string name="txtConfirmYes">Sim</string>
     <string name="txtConfirmNo">Não</string>
     <string name="save">Guardar</string>
+    <string name="ChooseEmail">Escolha a APP de e-mail</string>
+    <string name="CantSendFeedback">Não é possível eviar feedback, tente mais tarde!</string>
 </resources>
