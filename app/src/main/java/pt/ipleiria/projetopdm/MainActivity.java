@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
 
-    private LinearLayout mensagem;
+    private TextView mensagem;
     private SensorManager sensorManager;
     private Sensor lightSensor;
     private int sensorInd;
@@ -104,7 +105,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
 
-        mensagem = findViewById(R.id.linearLayoutWarning);
+        /**Warning sensor de luminosidade**/
+        mensagem = findViewById(R.id.textViewMensagem);
+        mensagem.setText("\u26a0\ufe0f" + getString(R.string.mensagemWarningLuz));
+
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
@@ -325,9 +330,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public final void onSensorChanged(SensorEvent event) {
 
         //check sensor type matches current sensor type set by button click
-        if (event.sensor.getType() == sensorInd) {
-            switch (event.sensor.getType()) {
-                case Sensor.TYPE_LIGHT:
+        if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
+
                     float value = event.values[0];
                     Toast.makeText(this, "luminescence " + value, Toast.LENGTH_LONG).show();
                     if (value < 400) {
@@ -335,15 +339,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     } else {
                         mensagem.setEnabled(false);
                     }
-                    break;
-
-
-
-
             }
 
         }
-    }
+
 
     @Override
     protected void onStart() {
@@ -356,8 +355,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onPause() {
-        super.onPause();
         sensorManager.unregisterListener(this);
+        super.onPause();
     }
 
 

@@ -34,33 +34,22 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutWarning"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView_"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="#000000"
-                        app:srcCompat="@drawable/warning__foreground" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textViewMensagem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/mensagemWarningLuz"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        />
+                        android:textSize="20sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewMain"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-
-                    android:id="@+id/recyclerViewMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
             </FrameLayout>
         </LinearLayout>
 
