@@ -7,10 +7,14 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,6 +40,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -220,55 +225,53 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
 //                    ImageView imgView =null;
 //                    Uri imgUri = Uri.parse(gestorVeiculos.obterVeiculo(itemPosition).getPathPhoto());
 //
-//                    if(gestorVeiculos.obterVeiculo(itemPosition).getPathPhoto().isEmpty()){
-//
-//                        switch (gestorVeiculos.obterVeiculo(itemPosition).getCategoria()){
-//                            case "Class A":
-//                               // bitmap =BitmapFactory.decodeResource(context.getResources(),R.drawable.classe_b);
-//
-//
-//                                icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.classe_a);
-//                                  break;
-//                            case "Class B":
-//                                 bitmap =BitmapFactory.decodeResource(context.getResources(),R.drawable.classe_b);
-//                                 break;
-//                            case "Class C":
-//                                 bitmap =BitmapFactory.decodeResource(context.getResources(),R.drawable.classe_c);
-//                                 break;
-//                            case "Class D":
-//                                 bitmap =BitmapFactory.decodeResource(context.getResources(),R.drawable.classe_d);
-//                                 break;
-//                        }
-//                    }else{
-//                        filePath=gestorVeiculos.obterVeiculo(itemPosition).getPathPhoto();
-//                    }
-//
-//                    String aaa =context.getResources().getString((R.string.VehicleInfo)) + "\n\n"
-//                            + context.getResources().getString((R.string.licensePlateString)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getMatricula()+"\n"+
-//                            context.getResources().getString((R.string.textViewOwner)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getProprietario()+"\n"+
-//                            context.getResources().getString((R.string.country)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getCountry()+"\n"+
-//                            context.getResources().getString((R.string.category)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getCategoria()+"\n"+
-//                            context.getResources().getString((R.string.textView_Make)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getMarca()+"\n"+
-//                            context.getResources().getString((R.string.textview_model)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getModelo()+"\n"+
-//                            context.getResources().getString((R.string.txtView_color)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getCor()+"\n"+
-//                            context.getResources().getString((R.string.photo)) +":\n";
-//
-//
-//                    sendIntent.setAction(Intent.ACTION_SEND);
-//                    sendIntent.setType("image/jpg");//setType// ("application/image");
-//                     // sendIntent.putExtra(Intent.EXTRA_SUBJECT, );
-//                    sendIntent.putExtra(Intent.EXTRA_TEXT,  aaa);
-//               //     sendIntent.putExtra(Intent.EXTRA_STREAM, R.drawable.classe_a);
-//                    context.startActivity(sendIntent);
+
+                    Bitmap icon =null;
+                    Uri imageuri=null;
+                    if(gestorVeiculos.obterVeiculo(itemPosition).getPathPhoto().isEmpty()){
+
+                        switch (gestorVeiculos.obterVeiculo(itemPosition).getCategoria()){
+                            case "Class A":
+                               // imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.classe_a);
+                                 icon =BitmapFactory.decodeResource(context.getResources(), R.drawable.classe_a);
+                                  break;
+                            case "Class B":
+                                imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.classe_b);
+                                 break;
+                            case "Class C":
+                                imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.classe_c);
+                                 break;
+                            case "Class D":
+                                imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.classe_d);
+                                 break;
+                        }
+                    }else{
+                        imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+imageView);
+                    }
+
+
+                    String aaa =context.getResources().getString((R.string.VehicleInfo)) + "\n\n"
+                            + context.getResources().getString((R.string.licensePlateString)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getMatricula()+"\n"+
+                            context.getResources().getString((R.string.textViewOwner)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getProprietario()+"\n"+
+                            context.getResources().getString((R.string.country)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getCountry()+"\n"+
+                            context.getResources().getString((R.string.category)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getCategoria()+"\n"+
+                            context.getResources().getString((R.string.textView_Make)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getMarca()+"\n"+
+                            context.getResources().getString((R.string.textview_model)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getModelo()+"\n"+
+                            context.getResources().getString((R.string.txtView_color)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getCor()+"\n"+
+                            context.getResources().getString((R.string.photo)) +":\n";
+
 //
 
-//                    Uri imageuri2=Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.classe_a);
-//
-//                    Intent share = new Intent(Intent.ACTION_SEND);
-//                    share.setType("image/jpg");
-//                    share.putExtra(Intent.EXTRA_STREAM, imageuri2);
-//                    context.startActivity(Intent.createChooser(share, "Share Image using"));
-//
+
+
+                    Intent share = new Intent(Intent.ACTION_SEND);
+                    share.setType("png/image");
+                    share.putExtra(Intent.EXTRA_TEXT,  aaa);
+                    share.putExtra(Intent.EXTRA_STREAM, imageuri);
+                    context.startActivity(Intent.createChooser(share, "Share Image using"));
+
+
+
 
 
 
@@ -277,6 +280,10 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             });
 
         }
+
+
+
+
 
         @Override
         public void onClick(View view) {
