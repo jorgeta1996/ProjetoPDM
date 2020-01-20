@@ -107,9 +107,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         /**Warning sensor de luminosidade**/
         mensagem = findViewById(R.id.textViewMensagem);
-        mensagem.setText("\u26a0\ufe0f" + getString(R.string.mensagemWarningLuz));
-
-
+        mensagem.setText("\u26a0\ufe0f" + getString(R.string.mensagemWarningLuz)); // emoji + mensagem de luminosidade
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
@@ -335,7 +333,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     if (value < 250) {
                         mensagem.setVisibility(View.VISIBLE);
                     } else {
-                        mensagem.setVisibility(View.INVISIBLE);
+                        mensagem.setVisibility(View.GONE);
                     }
             }
 

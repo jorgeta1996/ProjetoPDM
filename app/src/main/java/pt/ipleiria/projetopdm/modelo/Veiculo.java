@@ -66,6 +66,8 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
         return country;
     }
 
+
+
     @NonNull
     @Override
     public String toString() {

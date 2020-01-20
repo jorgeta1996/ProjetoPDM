@@ -36,6 +36,7 @@ public class GestorVeiculos implements Serializable {
         }
     }
 
+
     public Veiculo obterVeiculo(int pos){
         return veiculos.get(pos);
     }

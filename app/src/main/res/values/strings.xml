@@ -421,5 +421,7 @@
     <string name="ContactUS">Contact us</string>
     <string name="ContactUsByEmail">Contact us by e-mail</string>
     <string name="mensagemWarningLuz">Low Visibility, Please turn on your lights!</string>
+    <string name="VehicleInfo">VEHICLE\'S INFORMATION</string>
+    <string name="photo">Vehicle Photography</string>
 
 </resources>
