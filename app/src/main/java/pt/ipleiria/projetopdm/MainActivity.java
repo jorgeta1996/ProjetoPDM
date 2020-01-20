@@ -335,9 +335,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     float value = event.values[0];
                     Toast.makeText(this, "luminescence " + value, Toast.LENGTH_LONG).show();
                     if (value < 400) {
-                        mensagem.setEnabled(true);
+                        mensagem.setVisibility(View.VISIBLE);
                     } else {
-                        mensagem.setEnabled(false);
+                        mensagem.setVisibility(View.INVISIBLE);
                     }
             }
 
