@@ -331,10 +331,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //check sensor type matches current sensor type set by button click
         if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
-
                     float value = event.values[0];
-                    Toast.makeText(this, "luminescence " + value, Toast.LENGTH_LONG).show();
-                    if (value < 400) {
+                    if (value < 250) {
                         mensagem.setVisibility(View.VISIBLE);
                     } else {
                         mensagem.setVisibility(View.INVISIBLE);
