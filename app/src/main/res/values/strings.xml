@@ -420,4 +420,6 @@
     <string name="CantSendFeedback">Can\'t send feedback, try later!</string>
     <string name="ContactUS">Contact us</string>
     <string name="ContactUsByEmail">Contact us by e-mail</string>
+    <string name="mensagemWarningLuz">    Low visibility, please turn on your lights</string>
+
 </resources>

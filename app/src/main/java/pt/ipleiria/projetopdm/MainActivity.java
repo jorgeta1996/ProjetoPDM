@@ -1,16 +1,25 @@
 package pt.ipleiria.projetopdm;
 
 
+import android.app.Service;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,7 +42,17 @@ import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
 import pt.ipleiria.projetopdm.recycler.RecyclerVehiclesAdapter;
 
-public class MainActivity extends AppCompatActivity {
+
+
+public class MainActivity extends AppCompatActivity implements SensorEventListener{
+
+
+
+    private LinearLayout mensagem;
+    private SensorManager sensorManager;
+    private Sensor lightSensor;
+    private int sensorInd;
+
 
 
     private DrawerLayout mDrawer;
@@ -83,6 +102,11 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+
+        mensagem = findViewById(R.id.linearLayoutWarning);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
 
     @Override
@@ -172,6 +196,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
+
+
+
+
     /** TOOLBAR **/
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
@@ -256,4 +286,80 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
+
+
+
+
+    public boolean checkSensorAvailability(int sensorType) {
+        boolean isSensor = false;
+        if (sensorManager.getDefaultSensor(sensorType) != null) {
+            isSensor = true;
+        }
+        Log.d("checkSensorAvailability", "" + isSensor);
+        return isSensor;
+    }
+
+    public void lightSensor(View view) {
+        if (checkSensorAvailability(Sensor.TYPE_LIGHT)) {
+            sensorInd = Sensor.TYPE_LIGHT;
+        }
+    }
+
+
+    public void rotationSensor(View view) {
+        if (checkSensorAvailability(Sensor.TYPE_GAME_ROTATION_VECTOR)) {
+            sensorInd = Sensor.TYPE_GAME_ROTATION_VECTOR;
+        }
+    }
+
+
+
+
+    @Override
+    public final void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    public final void onSensorChanged(SensorEvent event) {
+
+        //check sensor type matches current sensor type set by button click
+        if (event.sensor.getType() == sensorInd) {
+            switch (event.sensor.getType()) {
+                case Sensor.TYPE_LIGHT:
+                    float value = event.values[0];
+                    Toast.makeText(this, "luminescence " + value, Toast.LENGTH_LONG).show();
+                    if (value < 400) {
+                        mensagem.setEnabled(true);
+                    } else {
+                        mensagem.setEnabled(false);
+                    }
+                    break;
+
+
+
+
+            }
+
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (lightSensor != null)
+            sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+
 }
+

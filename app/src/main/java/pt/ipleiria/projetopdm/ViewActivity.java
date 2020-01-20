@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.File;
 import java.io.FileInputStream;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -219,4 +221,8 @@ public class ViewActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
+
+
 }

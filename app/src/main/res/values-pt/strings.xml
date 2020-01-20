@@ -47,4 +47,5 @@
     <string name="CantSendFeedback">Não é possível eviar feedback, tente mais tarde!</string>
     <string name="ContactUS">Contacte-nos</string>
     <string name="ContactUsByEmail">Contacte-nos por e-mail</string>
+    <string name="mensagemWarningLuz">Visibilidade reduzina, ligue as luzes!</string>
 </resources>
