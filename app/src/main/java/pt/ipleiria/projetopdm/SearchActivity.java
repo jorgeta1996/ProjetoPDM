@@ -110,10 +110,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    /**
-     *
-     * @param view
-     */
+
     public void onClickProcurar(View view) {
         EditText editText_search = findViewById(R.id.editText_searchMatricula);
         String matriculaToSearch = editText_search.getText().toString();
