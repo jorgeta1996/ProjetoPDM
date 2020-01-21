@@ -1,5 +1,9 @@
 package pt.ipleiria.projetopdm;
 
+/**
+ * Classe com configurações para a base de dados Gooogle Spreadsheets
+ */
+
 public class Configuration {
 
     public static final String APP_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxgD3YN9pZDByMeObMSmqi6zl7AtU8_NNCL4HkC9JXQ-ep_ZEk/exec";
