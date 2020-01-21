@@ -108,7 +108,10 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     *
+     * @param view
+     */
     public void onClickProcurar(View view) {
         EditText editText_search = findViewById(R.id.editText_searchMatricula);
         String matriculaToSearch = editText_search.getText().toString();
@@ -204,7 +207,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
-    /**-------------------------------------- /Métodos para a Navigation Drawer-------------------------------**/
+    /**-------------------------------------- / Métodos para a Navigation Drawer-------------------------------**/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
