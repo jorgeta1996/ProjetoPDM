@@ -1,6 +1,5 @@
 package pt.ipleiria.projetopdm;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -15,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -29,10 +27,12 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
-import pt.ipleiria.projetopdm.modelo.Veiculo;
 
 public class SearchActivity extends AppCompatActivity {
 
+    /**
+     * Variáveis para pesquisa
+     */
     private ListView listView;
     private GestorVeiculos gestorVeiculos;
     private EditText editText;
@@ -47,7 +47,6 @@ public class SearchActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-
 
 
 
@@ -66,6 +65,10 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,matriculas);
         listView.setAdapter(adapter);
 
+
+        /**
+         * Atualiza os elementos da listView à medida que os carateres são colocados ou retirados da barra de pesquisa
+         */
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -84,6 +87,9 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Abre nova atividade ao carregar num dos elementos na listviiew
+         */
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
                                             public void onItemClick (AdapterView < ? > adapter, View view,int position, long arg){
@@ -111,6 +117,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Método para procurar (deprecated), pois já atualiza automaticamente
+     * @param view
+     */
     public void onClickProcurar(View view) {
         EditText editText_search = findViewById(R.id.editText_searchMatricula);
         String matriculaToSearch = editText_search.getText().toString();
@@ -136,8 +146,6 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
 
 
 
@@ -211,27 +219,8 @@ public class SearchActivity extends AppCompatActivity {
     }
     /**-------------------------------------- / Métodos para a Navigation Drawer-------------------------------**/
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case MainActivity.ADD_VEHICLE_REQUEST_CODE:
-                if (resultCode == RESULT_OK) {
-                    Veiculo newVeiculo = (Veiculo) data.getSerializableExtra(AddActivity.NEW_VEHICLE);
-                    if (!(gestorVeiculos.getVeiculos().contains(newVeiculo))) {
-                        gestorVeiculos.adicionarVeiculo(newVeiculo);
-                        createListView();
-                    }
-                    else {
-                        gestorVeiculos.atualizarVeiculo(gestorVeiculos.getVeiculos().indexOf(newVeiculo), newVeiculo);
-                        createListView();
-                    }
-                    adapter.notifyDataSetChanged();
 
-                }
-                break;
-        }
-    }
+
 
     /**
      * Cria listview de cada objeto com a respetiva matrícula e proprietário

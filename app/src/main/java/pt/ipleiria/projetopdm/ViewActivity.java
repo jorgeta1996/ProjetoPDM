@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +19,6 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.File;
 import java.io.FileInputStream;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -209,23 +207,6 @@ public class ViewActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
     /**-------------------------------------- /Métodos para a Navigation Drawer-------------------------------**/
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case MainActivity.ADD_VEHICLE_REQUEST_CODE:
-                if (resultCode == RESULT_OK) {
-                    Veiculo newVeiculo = (Veiculo) data.getSerializableExtra(AddActivity.NEW_VEHICLE);
-                    if (!(gestorVeiculos.getVeiculos().contains(newVeiculo))) {
-                        gestorVeiculos.adicionarVeiculo(newVeiculo);
-                    }
-                    else {
-                        gestorVeiculos.atualizarVeiculo(gestorVeiculos.getVeiculos().indexOf(newVeiculo), newVeiculo);
-                    }
-                }
-                break;
-        }
-    }
 
 
 
