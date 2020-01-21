@@ -353,6 +353,8 @@ public class AddActivity extends AppCompatActivity {
         final String model = editTextModel.getText().toString();
         final int color = cor;
 
+
+         /* Prevenção matriculas repetidas */
         for (Veiculo v:gestorVeiculos.getVeiculos()){
             if (v.getMatricula().equalsIgnoreCase(licensePlate)){
                 Toast.makeText(this, "License Plate already registered!", Toast.LENGTH_SHORT).show();
@@ -360,13 +362,14 @@ public class AddActivity extends AppCompatActivity {
             }
         }
 
+        /* Prevenção de campos por preencher */
         if (brand.trim().isEmpty() || model.trim().isEmpty()|| licensePlate.trim().isEmpty()|| owner.trim().isEmpty()|| color==0|| category.trim().isEmpty()|| country.trim().isEmpty()) {
             Toast.makeText(this, R.string.txtFillData, Toast.LENGTH_LONG).show();
             return;
         }
 
+        /* Gravação de imagem localmente*/
         if (read) {
-
             File f=new File(this.getFilesDir() + "/" + pathPhoto);
             f.delete();
 
@@ -406,6 +409,9 @@ public class AddActivity extends AppCompatActivity {
         final Veiculo veiculo = new Veiculo(brand,model,licensePlate,pathPhoto,owner,color,category,country);
 
 
+        /**
+         * Pedido para adicionar veiculo à base de dados (google spreadsheets)
+         * **/
         final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, ADD_USER_URL,
@@ -458,6 +464,9 @@ public class AddActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * Método para alterar o tamanho do bitmap da imagem
+     */
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
@@ -474,6 +483,9 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Método para transformar o bitmap em String
+     * */
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -483,6 +495,9 @@ public class AddActivity extends AppCompatActivity {
         return encodedImage;
     }
 
+    /**
+     * Método para gravar imagem localmente
+     * **/
     public void saveImage(String filename, Bitmap bitmap) {
         FileOutputStream outputStream;
         try {
@@ -494,7 +509,9 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Método onClick do botão da escolha da cor
+     * **/
     public void onClickBtnColor(View view) {
         AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, cor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
