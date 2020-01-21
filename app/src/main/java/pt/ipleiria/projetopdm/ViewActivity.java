@@ -209,23 +209,6 @@ public class ViewActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
     /**-------------------------------------- /Métodos para a Navigation Drawer-------------------------------**/
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case MainActivity.ADD_VEHICLE_REQUEST_CODE:
-                if (resultCode == RESULT_OK) {
-                    Veiculo newVeiculo = (Veiculo) data.getSerializableExtra(AddActivity.NEW_VEHICLE);
-                    if (!(gestorVeiculos.getVeiculos().contains(newVeiculo))) {
-                        gestorVeiculos.adicionarVeiculo(newVeiculo);
-                    }
-                    else {
-                        gestorVeiculos.atualizarVeiculo(gestorVeiculos.getVeiculos().indexOf(newVeiculo), newVeiculo);
-                    }
-                }
-                break;
-        }
-    }
 
 
 
