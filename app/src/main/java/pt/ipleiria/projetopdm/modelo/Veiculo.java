@@ -8,6 +8,9 @@ import java.io.Serializable;
 
 public class Veiculo implements Serializable, Comparable<Veiculo>  {
 
+    /**
+     * Variaveis do veiculo
+     */
     private String matricula;
     private String modelo;
     private String marca;
@@ -28,12 +31,19 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
         this.country = country;
     }
 
-
+    /**
+     * Método que compara a categoria de veiculos para ordená-los posteriormente
+     * @param veiculo Veiculo adicionado a comparar com restantes
+     * @return
+     */
     @Override
     public int compareTo(Veiculo veiculo) {
         return categoria.compareToIgnoreCase(veiculo.getCategoria());
     }
 
+    /**
+     * Get's dos campos do construtor
+     */
     public String getMatricula() {
         return matricula;
     }
@@ -67,7 +77,10 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
     }
 
 
-
+    /**
+     * toString de um veiculo
+     * @return String com matricula, marca e modelo
+     */
     @NonNull
     @Override
     public String toString() {
