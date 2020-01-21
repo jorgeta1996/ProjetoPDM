@@ -7,6 +7,9 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Animação inicial da aplicação
+ */
 public class SplashActivity extends AppCompatActivity {
 
 

@@ -2,14 +2,12 @@ package pt.ipleiria.projetopdm;
 
 
 import android.app.ProgressDialog;
-import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -21,15 +19,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,9 +42,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
@@ -68,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView mensagem;
     private SensorManager sensorManager;
     private Sensor lightSensor;
-    private int sensorInd;
-
 
 
     private DrawerLayout mDrawer;
@@ -82,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private RecyclerView mRecyclerView;
     private RecyclerVehiclesAdapter mAdapter;
 
+    /**
+     * Constantes
+     */
     public static final int ADD_VEHICLE_REQUEST_CODE = 1;
     public static final int EDIT_VEHICLE_REQUEST_CODE = 2;
     private static final String ESTADO_GESTOR_VEICULOS = "ESTADO_GESTOR_VEICULOS";
@@ -90,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public static final String VEICULOS = "veiculos";
 
     String pathPhoto;
-
+    private int sensorInd;
 
 
     @Override
@@ -99,7 +90,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
 
 
-
+        /**
+         * Toolbar
+         */
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -113,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         drawerToggle = setupDrawerToggle();
         drawerToggle.syncState();
         mDrawer.addDrawerListener(drawerToggle);
+
 
         if (savedInstanceState == null) {
             this.gestorVeiculos = gestorVeiculos.getInstance();
@@ -131,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
 
+    /**
+     * Pedido para receber veiculos da base de dados
+     */
     private void sendRequest() {
         final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
 
@@ -164,11 +161,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * Método para converter dados Json
+     */
     private void showJSON(String json) {
         JsonParser pj = new JsonParser(json);
         pj.parseJSON();
-
-
 
         if (JsonParser.uMatricula == null && JsonParser.uProprietario == null && JsonParser.uMarca == null && JsonParser.uModelo == null && JsonParser.uCor == null && JsonParser.uImage == null && JsonParser.uCategoria == null && JsonParser.uCountry == null) {
             Toast.makeText(this, "No Users Found", Toast.LENGTH_SHORT).show();
@@ -243,14 +241,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-//    @Override
-//    protected void onSaveInstanceState(@NonNull Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putSerializable(ESTADO_GESTOR_VEICULOS, gestorVeiculos);
-//
-//    }
-
-
+    /**
+     * Método que controla botões do menu da barra
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -259,6 +252,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         switch (item.getItemId()){
+            /**
+             * Botão de apagar veiculos selecionados (checkboxes)
+             */
             case R.id.menuItemDelete:
                 if (!mAdapter.getListaVeiculos().isEmpty()) {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -286,11 +282,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     Toast.makeText(this, "Select an item", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            /**
+             * Botão de adicionar veiculo
+             */
             case R.id.menuItemAdd:
                 Intent intentAdd = new Intent(this, AddActivity.class);
                 intentAdd.putExtra(VEICULOS,gestorVeiculos);
                 startActivityForResult(intentAdd, ADD_VEHICLE_REQUEST_CODE);
                 break;
+            /**
+             * Botão de procurar veiculo
+             */
             case R.id.menuItemSearch:
                 Intent intentSearch = new Intent(this, SearchActivity.class);
                 startActivity(intentSearch);
@@ -298,12 +300,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Método para selecionar ficheiro xml do menu a utilizar
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_item,menu);
         return true;
     }
-
 
     /** TOOLBAR **/
     private void setupDrawerContent(NavigationView navigationView) {
@@ -392,10 +397,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-
-
-
-
+    /**
+     * Métodos para Sensor de luminosidade
+     */
     public boolean checkSensorAvailability(int sensorType) {
         boolean isSensor = false;
         if (sensorManager.getDefaultSensor(sensorType) != null) {
@@ -411,19 +415,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-
     public void rotationSensor(View view) {
         if (checkSensorAvailability(Sensor.TYPE_GAME_ROTATION_VECTOR)) {
             sensorInd = Sensor.TYPE_GAME_ROTATION_VECTOR;
         }
     }
 
-
-
-
     @Override
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     @Override
@@ -441,14 +440,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         }
 
-
     @Override
     protected void onStart() {
         super.onStart();
         if (lightSensor != null)
             sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
-
-
     }
 
     @Override
