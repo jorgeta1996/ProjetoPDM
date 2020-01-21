@@ -14,6 +14,9 @@ import static pt.ipleiria.projetopdm.Configuration.KEY_PROPRIETARIO;
 import static pt.ipleiria.projetopdm.Configuration.KEY_COUNTRY;
 import static pt.ipleiria.projetopdm.Configuration.KEY_USERS;
 
+/**
+ * Classe que converte os dados Json da base de dados
+ */
 public class JsonParser {
     public static String[] uMatricula;
     public static String[] uProprietario;
