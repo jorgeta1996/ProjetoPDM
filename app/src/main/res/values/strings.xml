@@ -369,6 +369,101 @@
         <item>Zhongyu</item>
         <item>Zündapp</item>
     </string-array>
+    <string-array name="listaBus">
+        <item>Adria</item>
+        <item>Andrade</item>
+        <item>Autostar</item>
+        <item>Bavaria-Camp</item>
+        <item>Benimar</item>
+        <item>Blucamp</item>
+        <item>Bürstner</item>
+        <item>Carado</item>
+        <item>Caravelair</item>
+        <item>Carthago</item>
+        <item>Challenger</item>
+        <item>Chausson</item>
+        <item>CI Internationa</item>
+        <item>Citroen</item>
+        <item>Dethleffs</item>
+        <item>Elnagh</item>
+        <item>Eriba</item>
+        <item>Euramobil</item>
+        <item>Fendt</item>
+        <item>Fiat</item>
+        <item>Fleurette</item>
+        <item>Ford</item>
+        <item>Ford / Reimo</item>
+        <item>Giottiline</item>
+        <item>Hobby</item>
+        <item>Hymer</item>
+        <item>Ilusion</item>
+        <item>Itineo</item>
+        <item>Joint</item>
+        <item>Knaus</item>
+        <item>Laika</item>
+        <item>LMC</item>
+        <item>McLouis</item>
+        <item>Mercedes-Benz</item>
+        <item>Miller</item>
+        <item>Mobilvetta</item>
+        <item>Moncayo</item>
+        <item>Mooveo</item>
+        <item>Niesmann+Bischoff</item>
+        <item>Opel</item>
+        <item>Outra não listada</item>
+        <item>Peugeot</item>
+        <item>Pilote</item>
+        <item>Pluma</item>
+        <item>Pössl</item>
+        <item>Rapido</item>
+        <item>Renault</item>
+        <item>Rimor</item>
+        <item>Riviera</item>
+        <item>Roller Team</item>
+        <item>Sun Living</item>
+        <item>Sun Roller</item>
+        <item>Sunlight</item>
+        <item>Tabbert</item>
+        <item>TEC</item>
+        <item>Vimara</item>
+        <item>VW</item>
+        <item>Weinsberg</item>
+
+    </string-array>
+    <string-array name="listaTrucks">
+        <item>Amazone</item>
+        <item>DAF</item>
+        <item>Deutz</item>
+        <item>Deutz-Fahr</item>
+        <item>Fiat</item>
+        <item>Ford</item>
+        <item>Fruehauf</item>
+        <item>Hitachi</item>
+        <item>Hyster</item>
+        <item>Isuzu</item>
+        <item>Iveco</item>
+        <item>JCB</item>
+        <item>Jungheinrich</item>
+        <item>Kogel</item>
+        <item>Komatsu</item>
+        <item>Krone</item>
+        <item>MAN</item>
+        <item>Massey Ferguso</item>
+        <item>Mercedes Benz</item>
+        <item>Mitsubishi</item>
+        <item>Nissan</item>
+        <item>Outra não listada</item>
+        <item>Renault</item>
+        <item>Scania</item>
+        <item>Schmitz Cargob</item>
+        <item>Still</item>
+        <item>Takeuchi</item>
+        <item>Toyota</item>
+        <item>Volvo</item>
+        <item>Yale</item>
+        <item>Yanmar</item>
+    </string-array>
+
 
     <string name="searchString">Search</string>
     <string name="licensePlateString">License Plate</string>
@@ -387,7 +482,9 @@
     <string name="textViewclose">Close</string>
     <string name="spinnerDialogTitle">Select Items</string>
     <string name="icon_info" translatable="false">Info</string>
-    <string name="icon_infoText"><b>Class A</b>\nVehicles with two wheels.\n\n<b>Class B</b>\nWeight: Máx 3500Kg\nPassengers: Máx 9\n\n<b>Class C</b>\nWeight: >3500Kg\nPassengers: Máx 9\n\n<b>Class D</b>\nPassengers: >9</string>
+
+ <string name="icon_infoText"><b>Class A</b>\n Vehicles with two wheels.\n\n <b>Class B</b> \n Weight: Máx 3500Kg \n Passengers: Máx 9 \n\n <b>Class C</b> \n Weight: >3500Kg \n Passengers: Máx 9 \n\n <b>Class D</b> \n Passengers: >9</string>-->
+
     <string name="icon_infoTitle">Information</string>
     <string name="ok" translatable="false">OK</string>
     <string name="textView_SpinnerMarcas">Choose a Brand</string>
@@ -423,5 +520,6 @@
     <string name="mensagemWarningLuz">Low Visibility, Please turn on your lights!</string>
     <string name="VehicleInfo">VEHICLE\'S INFORMATION</string>
     <string name="photo">Vehicle Photography</string>
+    <string name="navDrawerInfo" translatable="false">ESTG - IPL \nEEC - PDM \n\nAléxio Cardoso \nAntónio Mota\n\n2019/2020</string>
 
 </resources>

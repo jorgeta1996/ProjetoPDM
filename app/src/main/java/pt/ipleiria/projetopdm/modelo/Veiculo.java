@@ -31,7 +31,7 @@ public class Veiculo implements Serializable, Comparable<Veiculo>  {
 
     @Override
     public int compareTo(Veiculo veiculo) {
-        return matricula.compareToIgnoreCase(veiculo.getMatricula());
+        return categoria.compareToIgnoreCase(veiculo.getCategoria());
     }
 
     public String getMatricula() {

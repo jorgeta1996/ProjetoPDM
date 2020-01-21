@@ -1,6 +1,7 @@
 package pt.ipleiria.projetopdm.recycler;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +35,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.load.engine.Resource;
 
 import java.io.ByteArrayOutputStream;
@@ -45,12 +54,17 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pt.ipleiria.projetopdm.EditActivity;
 import pt.ipleiria.projetopdm.MainActivity;
 import pt.ipleiria.projetopdm.R;
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
+
+import static pt.ipleiria.projetopdm.Configuration.DEL_USER_URL;
+import static pt.ipleiria.projetopdm.Configuration.KEY_ACTION;
+import static pt.ipleiria.projetopdm.Configuration.KEY_POSITION;
 
 public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehiclesAdapter.VehiclesHolder> {
 
@@ -61,6 +75,8 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
     private ArrayList<Veiculo> listaVeiculos = new ArrayList<>();
     private HashMap<Integer, Boolean> checkBoxStates = new HashMap<>();
     private boolean longClick;
+
+
 
     public RecyclerVehiclesAdapter(GestorVeiculos gestorVeiculos, Context context) {
         this.gestorVeiculos = gestorVeiculos;
@@ -87,7 +103,7 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         holder.textViewcategory.setText(mCurrent.getCategoria());
         holder.textViewColor.setBackgroundColor(mCurrent.getCor());
 
-        if (mCurrent.getPathPhoto().isEmpty()) {
+        if (mCurrent.getPathPhoto().length()<2) {
             switch (mCurrent.getCategoria()) {
                 case "Class A":
                     holder.imageView.setImageResource(R.drawable.classe_a);
@@ -199,6 +215,7 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
                     itemPosition = getLayoutPosition();
                     Intent iEdit = new Intent(context, EditActivity.class);
                     iEdit.putExtra(MainActivity.VEICULO,gestorVeiculos.obterVeiculo(itemPosition));
+                    iEdit.putExtra(MainActivity.VEICULO_POSITION,itemPosition);
                     ((Activity)context).startActivityForResult(iEdit, MainActivity.EDIT_VEHICLE_REQUEST_CODE);
                 }
             });
@@ -215,41 +232,27 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
                 @Override
                 public void onClick(View view) {
 
-
-//                    Intent sendIntent = new Intent();
-//
-//                    String filePath = null;
-//                    Bitmap bitmap = null;
-//                    Bitmap icon =null;
-//                    Uri uri =null;
-//                    ImageView imgView =null;
-//                    Uri imgUri = Uri.parse(gestorVeiculos.obterVeiculo(itemPosition).getPathPhoto());
-//
-
-                    Bitmap icon =null;
                     Uri imageuri=null;
-                    if(gestorVeiculos.obterVeiculo(itemPosition).getPathPhoto().isEmpty()){
+                    if(gestorVeiculos.obterVeiculo(itemPosition).getPathPhoto().length()<3){
 
                         switch (gestorVeiculos.obterVeiculo(itemPosition).getCategoria()){
                             case "Class A":
-                               // imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.classe_a);
-                                 icon =BitmapFactory.decodeResource(context.getResources(), R.drawable.classe_a);
-                                  break;
+                                imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.classe_a);
+                                break;
                             case "Class B":
                                 imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.classe_b);
-                                 break;
+                                break;
                             case "Class C":
                                 imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.classe_c);
-                                 break;
+                                break;
                             case "Class D":
                                 imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.classe_d);
-                                 break;
+                                break;
                         }
                     }else{
-                        imageuri=Uri.parse("android.resource://"+context.getPackageName()+"/"+imageView);
+                        imageuri=Uri.parse(gestorVeiculos.obterVeiculo(itemPosition).getPathPhoto());
+
                     }
-
-
                     String aaa =context.getResources().getString((R.string.VehicleInfo)) + "\n\n"
                             + context.getResources().getString((R.string.licensePlateString)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getMatricula()+"\n"+
                             context.getResources().getString((R.string.textViewOwner)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getProprietario()+"\n"+
@@ -260,30 +263,15 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
                             context.getResources().getString((R.string.txtView_color)) +": "+gestorVeiculos.obterVeiculo(itemPosition).getCor()+"\n"+
                             context.getResources().getString((R.string.photo)) +":\n";
 
-//
-
-
-
                     Intent share = new Intent(Intent.ACTION_SEND);
-                    share.setType("png/image");
+                    share.setType("image/*");
                     share.putExtra(Intent.EXTRA_TEXT,  aaa);
                     share.putExtra(Intent.EXTRA_STREAM, imageuri);
                     context.startActivity(Intent.createChooser(share, "Share Image using"));
 
-
-
-
-
-
-
                 }
             });
-
         }
-
-
-
-
 
         @Override
         public void onClick(View view) {
@@ -334,11 +322,12 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             dialog.setPositiveButton(context.getString(R.string.txtConfirmYes), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     String path = gestorVeiculos.getVeiculos().get(position).getPathPhoto();
-                    if (path != "") {
+                    if (path.length()>3) {
                         File f = new File(context.getFilesDir() + "/" + path);
                         f.delete();
                     }
                     gestorVeiculos.removerVeiculo(position);
+                    sendRequestDelete(position);
 
                     mAdapter.notifyDataSetChanged();
                 }
@@ -347,6 +336,46 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             dialog.setNegativeButton(context.getString(R.string.txtConfirmNo), null);
             dialog.show();
         }
+    }
+
+    public void sendRequestDelete(final int mat){
+        final ProgressDialog loading = ProgressDialog.show(context, "Uploading...", "Please wait...", false, false);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,DEL_USER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+//                        showJSON(response,adapter);
+
+                        loading.dismiss();
+                        Toast.makeText(context, "Item Deleted", Toast.LENGTH_LONG).show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put(KEY_ACTION, "delete");
+                params.put(KEY_POSITION, String.valueOf(mat));
+                return params;
+            }};
+
+        int socketTimeout = 30000;  //30 seconds. You can change it
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        requestQueue.add(stringRequest);
     }
 
     public ArrayList<Veiculo> getListaVeiculos(){

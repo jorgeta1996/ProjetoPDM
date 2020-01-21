@@ -13,9 +13,6 @@
         android:title="@string/Add"
         app:showAsAction="always" />
     <item
-        android:id="@+id/menuItemShare"
-        android:title="@string/Share" />
-    <item
         android:id="@+id/menuItemDelete"
         android:title="@string/Delete" />
 

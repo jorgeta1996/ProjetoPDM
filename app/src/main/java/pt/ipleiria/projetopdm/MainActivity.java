@@ -1,17 +1,22 @@
 package pt.ipleiria.projetopdm;
 
 
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,9 +38,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -42,6 +56,8 @@ import java.util.Vector;
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
 import pt.ipleiria.projetopdm.recycler.RecyclerVehiclesAdapter;
+
+import static pt.ipleiria.projetopdm.Configuration.LIST_USER_URL;
 
 
 
@@ -70,12 +86,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public static final int EDIT_VEHICLE_REQUEST_CODE = 2;
     private static final String ESTADO_GESTOR_VEICULOS = "ESTADO_GESTOR_VEICULOS";
     public static final String VEICULO = "veiculo";
+    public static final String VEICULO_POSITION = "veiculo_position";
+    public static final String VEICULOS = "veiculos";
+
+    String pathPhoto;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -93,16 +116,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (savedInstanceState == null) {
             this.gestorVeiculos = gestorVeiculos.getInstance();
-//            this.gestorVeiculos.lerFicheiro(this);
-        } else {
+        }else {
             this.gestorVeiculos = (GestorVeiculos) savedInstanceState.getSerializable(ESTADO_GESTOR_VEICULOS);
         }
 
         mRecyclerView = findViewById(R.id.recyclerViewMain);
-        mAdapter = new RecyclerVehiclesAdapter(gestorVeiculos, this);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        sendRequest();
 
 
         /**Warning sensor de luminosidade**/
@@ -112,6 +131,95 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
 
+    private void sendRequest() {
+        final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
+
+        StringRequest stringRequest = new StringRequest(LIST_USER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Log.e("null","ser image"+response);
+                        showJSON(response);
+
+                        loading.dismiss();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        int socketTimeout = 30000; // 30 seconds. You can change it
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+
+        stringRequest.setRetryPolicy(policy);
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void showJSON(String json) {
+        JsonParser pj = new JsonParser(json);
+        pj.parseJSON();
+
+
+
+        if (JsonParser.uMatricula == null && JsonParser.uProprietario == null && JsonParser.uMarca == null && JsonParser.uModelo == null && JsonParser.uCor == null && JsonParser.uImage == null && JsonParser.uCategoria == null && JsonParser.uCountry == null) {
+            Toast.makeText(this, "No Users Found", Toast.LENGTH_SHORT).show();
+        } else {
+            for (int i=0;i<JsonParser.uMatricula.length;i++){
+                if (JsonParser.uMatricula[i]!=null) {
+                    if (JsonParser.uImage[i].length() > 10) {
+                        pathPhoto = JsonParser.uMatricula[i] + ".jpg";
+                        byte[] decodedString = Base64.decode(JsonParser.uImage[i], Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        saveImage(pathPhoto, (decodedByte));
+
+                    } else {
+                        switch (JsonParser.uCategoria[i]) {
+                            case "Class A":
+                                pathPhoto = "A";
+                                break;
+                            case "Class B":
+                                pathPhoto = "B";
+                                break;
+                            case "Class C":
+                                pathPhoto = "C";
+                                break;
+                            case "Class D":
+                                pathPhoto = "D";
+                                break;
+                        }
+                    }
+                    Veiculo veiculo = new Veiculo(JsonParser.uMarca[i], JsonParser.uModelo[i], JsonParser.uMatricula[i],pathPhoto,JsonParser.uProprietario[i],Integer.parseInt(JsonParser.uCor[i]),JsonParser.uCategoria[i],JsonParser.uCountry[i] );
+                    gestorVeiculos.adicionarVeiculo(veiculo);
+            }
+
+            }
+            mAdapter = new RecyclerVehiclesAdapter(gestorVeiculos,this);
+            mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            mAdapter.notifyDataSetChanged();
+
+        }
+    }
+
+    public void saveImage(String filename, Bitmap bitmap) {
+        FileOutputStream outputStream;
+        try {
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -135,12 +243,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable(ESTADO_GESTOR_VEICULOS, gestorVeiculos);
-
-    }
+//    @Override
+//    protected void onSaveInstanceState(@NonNull Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        outState.putSerializable(ESTADO_GESTOR_VEICULOS, gestorVeiculos);
+//
+//    }
 
 
     @Override
@@ -178,12 +286,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     Toast.makeText(this, "Select an item", Toast.LENGTH_SHORT).show();
                 }
                 break;
-
-            case R.id.menuItemShare:
-                //POR FAZER
-                break;
             case R.id.menuItemAdd:
                 Intent intentAdd = new Intent(this, AddActivity.class);
+                intentAdd.putExtra(VEICULOS,gestorVeiculos);
                 startActivityForResult(intentAdd, ADD_VEHICLE_REQUEST_CODE);
                 break;
             case R.id.menuItemSearch:
@@ -198,11 +303,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         getMenuInflater().inflate(R.menu.menu_item,menu);
         return true;
     }
-
-
-
-
-
 
 
     /** TOOLBAR **/
@@ -225,10 +325,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
      */
     public void selectDrawerItem(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.nav_home:
-                Intent i1 = new Intent(this, MainActivity.class);
-                startActivity(i1);
-                break;
             case R.id.nav_search:
                 Intent i2 = new Intent(this, SearchActivity.class);
                 startActivity(i2);
@@ -237,10 +333,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 Intent i3 = new Intent(this, AddActivity.class);
                 startActivity(i3);
                 break;
-            case R.id.nav_share:
-//                Intent i4 = new Intent(this, MainActivity.class);
-//                startActivity(i4);
-                break;
+
             case R.id.nav_feedback:
 
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -257,8 +350,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 break;
             case R.id.nav_info:
-//                Intent i6 = new Intent(this, MainActivity.class);
-//                startActivity(i6);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage(R.string.navDrawerInfo);
+                dialog.setTitle(R.string.icon_infoTitle);
+                dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+
+                dialog.create();
+                dialog.show();
                 break;
             case R.id.nav_leave:
                 finish();

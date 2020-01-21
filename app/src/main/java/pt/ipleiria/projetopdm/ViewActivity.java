@@ -1,5 +1,6 @@
 package pt.ipleiria.projetopdm;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import java.io.FileInputStream;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -78,7 +80,7 @@ public class ViewActivity extends AppCompatActivity {
 
         /** Seleciona imagem do veículo**/
         imageVehicle = findViewById(R.id.imageVehicleEdit);
-        if (v.getPathPhoto().trim().isEmpty() ) {
+        if (v.getPathPhoto().length()<3 ) {
             switch (v.getCategoria()) {
                 case "Class A":
                     imageVehicle.setImageResource(R.drawable.classe_a);
@@ -139,12 +141,7 @@ public class ViewActivity extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-
         switch (menuItem.getItemId()) {
-            case R.id.nav_home:
-                Intent i1 = new Intent(this, MainActivity.class);
-                startActivity(i1);
-                break;
             case R.id.nav_search:
                 Intent i2 = new Intent(this, SearchActivity.class);
                 startActivity(i2);
@@ -153,10 +150,7 @@ public class ViewActivity extends AppCompatActivity {
                 Intent i3 = new Intent(this, AddActivity.class);
                 startActivity(i3);
                 break;
-            case R.id.nav_share:
-//                Intent i4 = new Intent(this, MainActivity.class);
-//                startActivity(i4);
-                break;
+
             case R.id.nav_feedback:
 
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -173,11 +167,22 @@ public class ViewActivity extends AppCompatActivity {
 
                 break;
             case R.id.nav_info:
-//                Intent i6 = new Intent(this, MainActivity.class);
-//                startActivity(i6);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage(R.string.navDrawerInfo);
+                dialog.setTitle(R.string.icon_infoTitle);
+                dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+
+                dialog.create();
+                dialog.show();
                 break;
             case R.id.nav_leave:
                 finish();
+
+
                 break;
             default:
 

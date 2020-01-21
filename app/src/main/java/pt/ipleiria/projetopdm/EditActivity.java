@@ -1,6 +1,8 @@
 package pt.ipleiria.projetopdm;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -9,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,23 +26,49 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
+import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
+import pt.ipleiria.projetopdm.recycler.RecyclerVehiclesAdapter;
 import yuku.ambilwarna.AmbilWarnaDialog;
+
+import static pt.ipleiria.projetopdm.Configuration.EDIT_USER_URL;
+import static pt.ipleiria.projetopdm.Configuration.KEY_ACTION;
+import static pt.ipleiria.projetopdm.Configuration.KEY_CATEGORIA;
+import static pt.ipleiria.projetopdm.Configuration.KEY_COR;
+import static pt.ipleiria.projetopdm.Configuration.KEY_COUNTRY;
+import static pt.ipleiria.projetopdm.Configuration.KEY_IMAGE;
+import static pt.ipleiria.projetopdm.Configuration.KEY_MARCA;
+import static pt.ipleiria.projetopdm.Configuration.KEY_MATRICULA;
+import static pt.ipleiria.projetopdm.Configuration.KEY_MODELO;
+import static pt.ipleiria.projetopdm.Configuration.KEY_POSITION;
+import static pt.ipleiria.projetopdm.Configuration.KEY_PROPRIETARIO;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -59,6 +88,12 @@ public class EditActivity extends AppCompatActivity {
     private TextView textViewSpinnerDialog;
     private TextView textViewSpinnerCountriesDialog;
     private  Spinner spinnerVehicle;
+
+    private GestorVeiculos gestorVeiculos;
+
+    private Bitmap rbitmap;
+    private String userImage;
+    private int veiculoPos;
 
     /**
      * Variáveis para Toolbar
@@ -84,6 +119,7 @@ public class EditActivity extends AppCompatActivity {
 
         /** Instanciamento das variáveis para o construtor Veiculo e pré-preenchimento dos campos editáveis**/
         Veiculo v = (Veiculo) getIntent().getSerializableExtra(MainActivity.VEICULO);
+        veiculoPos = (Integer) getIntent().getSerializableExtra(MainActivity.VEICULO_POSITION);
         editText_Matricula = findViewById(R.id.editTextPlateEdit);
         editText_Matricula.setText(v.getMatricula());
         editText_Owner = findViewById(R.id.editTextOwnerEdit);
@@ -250,13 +286,12 @@ public class EditActivity extends AppCompatActivity {
     public void onClickButtonEdit(View view) {
         EditText editTextOwner = findViewById(R.id.editTextOwnerEdit);
         EditText editTextPlate = findViewById(R.id.editTextPlateEdit);
-        String owner = editTextOwner.getText().toString();
-        String licensePlate = editTextPlate.getText().toString().trim();
-        String country = textViewSpinnerCountriesDialog.getText().toString();
-        String brand = textViewSpinnerDialog.getText().toString();
-        String model = editText_Model.getText().toString();
-        int color = cor;
-//s
+        final String owner = editTextOwner.getText().toString();
+        final String licensePlate = editTextPlate.getText().toString().trim();
+        final String country = textViewSpinnerCountriesDialog.getText().toString();
+        final String brand = textViewSpinnerDialog.getText().toString();
+        final String model = editText_Model.getText().toString();
+        final int color = cor;
 
         if (read) {
 
@@ -265,6 +300,26 @@ public class EditActivity extends AppCompatActivity {
 
             pathPhoto = licensePlate + ".jpg";
             saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
+            rbitmap = getResizedBitmap(((BitmapDrawable) imageVehicle.getDrawable()).getBitmap(), 250);//Setting the Bitmap to ImageView
+            userImage = getStringImage(rbitmap);
+        }else{
+            switch (category){
+                case "Class A":
+                    userImage = "A";
+                    break;
+                case "Class B":
+                    userImage = "B";
+                    break;
+                case "Class C":
+                    userImage = "C";
+                    break;
+                case "Class D":
+                    userImage = "D";
+                    break;
+                default:
+                    userImage = "Default";
+            }
+
         }
         /**
          * Construtor do veiculo
@@ -277,15 +332,85 @@ public class EditActivity extends AppCompatActivity {
          * @param category Categoria do veiculo
          * @param country País da matricula do veiculo
          */
-        Veiculo veiculo = new Veiculo(brand, model, licensePlate, pathPhoto, owner, color, category, country);
+        final Veiculo veiculo = new Veiculo(brand, model, licensePlate, pathPhoto, owner, color, category, country);
 
+        final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
 
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra(EDIT_VEHICLE, veiculo);
-        setResult(RESULT_OK, returnIntent);
-        finish();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, EDIT_USER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loading.dismiss();
+                        Toast.makeText(EditActivity.this, "Item Edited", Toast.LENGTH_LONG).show();
+
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra(EDIT_VEHICLE, veiculo);
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(EditActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put(KEY_ACTION, "edit");
+                params.put(KEY_POSITION, String.valueOf(veiculoPos));
+                params.put(KEY_MATRICULA, licensePlate);
+                params.put(KEY_PROPRIETARIO, owner);
+                params.put(KEY_MARCA, brand);
+                params.put(KEY_MODELO, model);
+                params.put(KEY_COR, String.valueOf(cor));
+                params.put(KEY_IMAGE, userImage);
+                params.put(KEY_CATEGORIA, category);
+                params.put(KEY_COUNTRY, country);
+
+                return params;
+            }
+        };
+
+        int socketTimeout = 30000;  //30 seconds. You can change it
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+
+        stringRequest.setRetryPolicy(policy);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue.add(stringRequest);
     }
 
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+
+    }
+
+    public String getStringImage(Bitmap bmp) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        return encodedImage;
+    }
 
     /**
      * Método onClick para abrir a galeria e escolher uma foto
@@ -394,12 +519,7 @@ public class EditActivity extends AppCompatActivity {
 
 
     public void selectDrawerItem(MenuItem menuItem) {
-
         switch (menuItem.getItemId()) {
-            case R.id.nav_home:
-                Intent i1 = new Intent(this, MainActivity.class);
-                startActivity(i1);
-                break;
             case R.id.nav_search:
                 Intent i2 = new Intent(this, SearchActivity.class);
                 startActivity(i2);
@@ -408,10 +528,7 @@ public class EditActivity extends AppCompatActivity {
                 Intent i3 = new Intent(this, AddActivity.class);
                 startActivity(i3);
                 break;
-            case R.id.nav_share:
-//                Intent i4 = new Intent(this, MainActivity.class);
-//                startActivity(i4);
-                break;
+
             case R.id.nav_feedback:
 
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -428,11 +545,22 @@ public class EditActivity extends AppCompatActivity {
 
                 break;
             case R.id.nav_info:
-//                Intent i6 = new Intent(this, MainActivity.class);
-//                startActivity(i6);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage(R.string.navDrawerInfo);
+                dialog.setTitle(R.string.icon_infoTitle);
+                dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+
+                dialog.create();
+                dialog.show();
                 break;
             case R.id.nav_leave:
                 finish();
+
+
                 break;
             default:
 

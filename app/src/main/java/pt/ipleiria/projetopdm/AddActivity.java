@@ -1,6 +1,7 @@
 package pt.ipleiria.projetopdm;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,19 +34,43 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
+import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
 import yuku.ambilwarna.AmbilWarnaDialog;
+
+
+import static pt.ipleiria.projetopdm.Configuration.ADD_USER_URL;
+import static pt.ipleiria.projetopdm.Configuration.KEY_ACTION;
+import static pt.ipleiria.projetopdm.Configuration.KEY_CATEGORIA;
+import static pt.ipleiria.projetopdm.Configuration.KEY_COR;
+import static pt.ipleiria.projetopdm.Configuration.KEY_IMAGE;
+import static pt.ipleiria.projetopdm.Configuration.KEY_MARCA;
+import static pt.ipleiria.projetopdm.Configuration.KEY_MATRICULA;
+import static pt.ipleiria.projetopdm.Configuration.KEY_MODELO;
+import static pt.ipleiria.projetopdm.Configuration.KEY_PROPRIETARIO;
+import static pt.ipleiria.projetopdm.Configuration.KEY_COUNTRY;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -54,6 +80,8 @@ public class AddActivity extends AppCompatActivity {
     public static final String NEW_VEHICLE = "NEWVEHICLE";
     public static final int GALLERY_REQUEST_CODE = 1;
     public static final int CAMERA_REQUEST_CODE = 2;
+
+
 
     /**
      * Variável de verificação
@@ -74,6 +102,9 @@ public class AddActivity extends AppCompatActivity {
     private String pathPhoto;
 
     private SpinnerDialog spinnerDialog;
+    private Bitmap rbitmap;
+    private String userImage;
+    private GestorVeiculos gestorVeiculos;
 
     /**
      * Variáveis para Toolbar
@@ -92,6 +123,7 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         /** Minimizar notification bar do android **/
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        gestorVeiculos = (GestorVeiculos) getIntent().getSerializableExtra(MainActivity.VEICULOS);
 
         /** Toolbar **/
         toolbar = findViewById(R.id.toolbar);
@@ -139,16 +171,14 @@ public class AddActivity extends AppCompatActivity {
                         break;
                     case 2:
                         category="Class C";
-                        //MUDAR LISTA
-                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
+                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaTrucks)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_c);
                             pathPhoto="";
                         break;
                     case 3:
                         category="Class D";
-                        //MUDAR LISTA
-                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
+                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaBus)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_d);
                             pathPhoto="";
@@ -316,12 +346,19 @@ public class AddActivity extends AppCompatActivity {
     public void onClickButtonAdd(View view) {
         EditText editTextOwner = findViewById(R.id.editTextOwner);
         EditText editTextPlate = findViewById(R.id.editTextPlate);
-        String owner = editTextOwner.getText().toString();
-        String licensePlate = editTextPlate.getText().toString().trim();
-        String country = textViewSpinnerCountriesDialog.getText().toString();
-        String brand = textViewSpinnerDialog.getText().toString();
-        String model = editTextModel.getText().toString();
-        int color = cor;
+        final String owner = editTextOwner.getText().toString();
+        final String licensePlate = editTextPlate.getText().toString().trim();
+        final String country = textViewSpinnerCountriesDialog.getText().toString();
+        final String brand = textViewSpinnerDialog.getText().toString();
+        final String model = editTextModel.getText().toString();
+        final int color = cor;
+
+        for (Veiculo v:gestorVeiculos.getVeiculos()){
+            if (v.getMatricula().equalsIgnoreCase(licensePlate)){
+                Toast.makeText(this, "License Plate already registered!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
 
         if (brand.trim().isEmpty() || model.trim().isEmpty()|| licensePlate.trim().isEmpty()|| owner.trim().isEmpty()|| color==0|| category.trim().isEmpty()|| country.trim().isEmpty()) {
             Toast.makeText(this, R.string.txtFillData, Toast.LENGTH_LONG).show();
@@ -335,6 +372,25 @@ public class AddActivity extends AppCompatActivity {
 
             pathPhoto = licensePlate + ".jpg";
             saveImage(pathPhoto, ((BitmapDrawable) imageVehicle.getDrawable()).getBitmap());
+            rbitmap = getResizedBitmap(((BitmapDrawable) imageVehicle.getDrawable()).getBitmap(), 250);//Setting the Bitmap to ImageView
+            userImage = getStringImage(rbitmap);
+        }else{
+            switch (category){
+                case "Class A":
+                    userImage = "A";
+                    break;
+                case "Class B":
+                    userImage = "B";
+                    break;
+                case "Class C":
+                    userImage = "C";
+                    break;
+                case "Class D":
+                    userImage = "D";
+                    break;
+                default:
+                    userImage = "Default";
+            }
         }
         /**
          * Construtor do veiculo
@@ -347,13 +403,84 @@ public class AddActivity extends AppCompatActivity {
          * @param category Categoria do veiculo
          * @param country País da matricula do veiculo
          */
-        Veiculo veiculo = new Veiculo(brand,model,licensePlate,pathPhoto,owner,color,category,country);
+        final Veiculo veiculo = new Veiculo(brand,model,licensePlate,pathPhoto,owner,color,category,country);
 
 
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra(NEW_VEHICLE, veiculo);
-        setResult(RESULT_OK, returnIntent);
-        finish();
+        final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ADD_USER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loading.dismiss();
+                        Toast.makeText(AddActivity.this, response, Toast.LENGTH_LONG).show();
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra(NEW_VEHICLE, veiculo);
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(AddActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put(KEY_ACTION, "insert");
+                params.put(KEY_MATRICULA, licensePlate);
+                params.put(KEY_PROPRIETARIO, owner);
+                params.put(KEY_MARCA, brand);
+                params.put(KEY_MODELO, model);
+                params.put(KEY_COR, String.valueOf(color));
+                params.put(KEY_IMAGE, userImage);
+                params.put(KEY_CATEGORIA, category);
+                params.put(KEY_COUNTRY, country);
+
+
+                return params;
+            }
+        };
+
+        int socketTimeout = 30000;  //30 seconds. You can change it
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+
+        stringRequest.setRetryPolicy(policy);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue.add(stringRequest);
+    }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+
+    }
+
+    public String getStringImage(Bitmap bmp) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        return encodedImage;
     }
 
     public void saveImage(String filename, Bitmap bitmap) {
@@ -399,12 +526,7 @@ public class AddActivity extends AppCompatActivity {
 
 
     public void selectDrawerItem(MenuItem menuItem) {
-
         switch (menuItem.getItemId()) {
-            case R.id.nav_home:
-                Intent i1 = new Intent(this, MainActivity.class);
-                startActivity(i1);
-                break;
             case R.id.nav_search:
                 Intent i2 = new Intent(this, SearchActivity.class);
                 startActivity(i2);
@@ -413,10 +535,7 @@ public class AddActivity extends AppCompatActivity {
                 Intent i3 = new Intent(this, AddActivity.class);
                 startActivity(i3);
                 break;
-            case R.id.nav_share:
-//                Intent i4 = new Intent(this, MainActivity.class);
-//                startActivity(i4);
-                break;
+
             case R.id.nav_feedback:
 
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -433,11 +552,22 @@ public class AddActivity extends AppCompatActivity {
 
                 break;
             case R.id.nav_info:
-//                Intent i6 = new Intent(this, MainActivity.class);
-//                startActivity(i6);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage(R.string.navDrawerInfo);
+                dialog.setTitle(R.string.icon_infoTitle);
+                dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+
+                dialog.create();
+                dialog.show();
                 break;
             case R.id.nav_leave:
                 finish();
+
+
                 break;
             default:
 
