@@ -77,7 +77,11 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
     private boolean longClick;
 
 
-
+    /**
+     * Construtor da recyclerview
+     * @param gestorVeiculos Gestor de veiculos
+     * @param context Atividade de onde é chamado
+     */
     public RecyclerVehiclesAdapter(GestorVeiculos gestorVeiculos, Context context) {
         this.gestorVeiculos = gestorVeiculos;
         this.context = context;
@@ -85,6 +89,9 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
 
     }
 
+    /**
+     *Interligação do ficheiro xml para os itens que serão mostrados
+     */
     @NonNull
     @Override
     public VehiclesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -92,6 +99,9 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         return new VehiclesHolder(itemView, this);
     }
 
+    /**
+     * Interligação dos dados recebidos com os campos no ficheiro xml
+     */
     @Override
     public void onBindViewHolder(@NonNull VehiclesHolder holder, int position) {
         final Veiculo mCurrent = gestorVeiculos.getVeiculos().get(position);
@@ -103,6 +113,9 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         holder.textViewcategory.setText(mCurrent.getCategoria());
         holder.textViewColor.setBackgroundColor(mCurrent.getCor());
 
+        /**
+         * Verificar tamanho da variavel pathphoto para confirmar que não foi guardada nenhuma imagem (utiliza imagens defaults)
+         */
         if (mCurrent.getPathPhoto().length()<2) {
             switch (mCurrent.getCategoria()) {
                 case "Class A":
@@ -141,12 +154,15 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             }
         }
 
+        /**
+         * Código para controlar checkboxes
+         */
         if (listaVeiculos.contains(mCurrent))
             holder.checkbox.setChecked(true);
         else
             holder.checkbox.setChecked(false);
-
         holder.checkbox.setVisibility(checkBoxStates.get(position) != null && !checkBoxStates.get(position) ? View.GONE : View.VISIBLE);
+
 
         holder.itemView.setLongClickable(true);
         holder.itemView.setClickable(true);
@@ -189,12 +205,19 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             textViewCountry = itemView.findViewById(R.id.textViewCountry);
             textViewcategory = itemView.findViewById(R.id.textViewClass);
             textViewColor = itemView.findViewById(R.id.textViewColor);
+            /**
+             * Layout expansivo
+             */
             layoutExpand = itemView.findViewById(R.id.linearLayout_expansivo);
             layoutExpand.setVisibility(View.GONE);
+            /**
+             * Checkboxes
+             */
             checkbox = itemView.findViewById(R.id.checkBoxItem);
             checkbox.setVisibility(View.GONE);
-
-
+            /**
+             * Botões do layout expansivo
+             */
             mItemDelete = itemView.findViewById(R.id.buttonEliminar);
             mItemEdit = itemView.findViewById(R.id.buttonEditar);
             mItemShare = itemView.findViewById(R.id.buttonShare);
@@ -273,6 +296,9 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             });
         }
 
+        /**
+         * Método de expandir layout/Selecionar veiculo quando checkboxes ativas(Após long click)
+         */
         @Override
         public void onClick(View view) {
             itemPosition=getLayoutPosition();
@@ -292,6 +318,9 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             }
         }
 
+        /**
+         * Método para ativar/desativar checkboxes
+         */
         @Override
         public boolean onLongClick(View view) {
             for (int i = 0; i < gestorVeiculos.getVeiculos().size(); i++) {
@@ -314,6 +343,10 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
             return true;
         }
 
+        /**
+         * Método para apagar veiculo
+         * @param position Posição do veiculo
+         */
         private void deleteVehicle(final int position){
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             dialog.setTitle(context.getString(R.string.txtRemove));
@@ -338,6 +371,10 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         }
     }
 
+    /**
+     * Método para enviar pedido para apagar veiculo na base de dados
+     * @param mat Posição do veiculo
+     */
     public void sendRequestDelete(final int mat){
         final ProgressDialog loading = ProgressDialog.show(context, "Uploading...", "Please wait...", false, false);
 
@@ -345,7 +382,6 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        showJSON(response,adapter);
 
                         loading.dismiss();
                         Toast.makeText(context, "Item Deleted", Toast.LENGTH_LONG).show();
@@ -367,7 +403,7 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
                 return params;
             }};
 
-        int socketTimeout = 30000;  //30 seconds. You can change it
+        int socketTimeout = 30000;  //30 seconds.
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -378,14 +414,26 @@ public class RecyclerVehiclesAdapter extends RecyclerView.Adapter<RecyclerVehicl
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * Lista de veiculos selecionados pelas checkboxes
+     * @return Lista de veiculos
+     */
     public ArrayList<Veiculo> getListaVeiculos(){
         return listaVeiculos;
     }
 
+    /**
+     * Método para obter veiculo da lista de veiculos das checkboxes através da posição
+     * @param index Posição do veiculo
+     * @return Veiculo na posição
+     */
     public Veiculo getVeiculoByIndex(int index){
         return listaVeiculos.get(index);
     }
 
+    /**
+     * Método para apagar lista de veiculos e desativar checkboxes
+     */
     public void clearListaVeiculos(){
         listaVeiculos.clear();
         longClick=false;
