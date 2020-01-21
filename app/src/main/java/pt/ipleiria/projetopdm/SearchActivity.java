@@ -228,6 +228,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+
     public void createListView(){
         matriculas.clear();
         for (int i=0;i<gestorVeiculos.getVeiculos().size();i++){
