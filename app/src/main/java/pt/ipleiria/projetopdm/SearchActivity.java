@@ -138,6 +138,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
+
     public void selectDrawerItem(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_search:
