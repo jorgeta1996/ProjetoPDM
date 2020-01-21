@@ -73,6 +73,9 @@ import static pt.ipleiria.projetopdm.Configuration.KEY_PROPRIETARIO;
 public class EditActivity extends AppCompatActivity {
 
 
+    /**
+     * Variáveis do veiculo
+     */
     private EditText editText_Matricula;
     private EditText editText_Owner;
     private EditText editText_Model;
@@ -81,19 +84,17 @@ public class EditActivity extends AppCompatActivity {
     private ImageView imageVehicle;
     private String category;
     private ArrayList<String> items;
+    private String pathPhoto;
 
     private SpinnerDialog spinnerDialog;
-    private boolean read;
-    private String pathPhoto;
     private TextView textViewSpinnerDialog;
     private TextView textViewSpinnerCountriesDialog;
     private  Spinner spinnerVehicle;
 
-    private GestorVeiculos gestorVeiculos;
-
     private Bitmap rbitmap;
     private String userImage;
     private int veiculoPos;
+    private boolean read;
 
     /**
      * Variáveis para Toolbar
@@ -103,7 +104,9 @@ public class EditActivity extends AppCompatActivity {
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
 
-
+    /**
+     * Constantes
+     */
     public static final String EDIT_VEHICLE = "EDITVEHICLE";
     public static final int GALLERY_REQUEST_CODE = 1;
     public static final int CAMERA_REQUEST_CODE = 2;
@@ -115,7 +118,6 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
         /** Minimizar notification bar do android **/
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 
         /** Instanciamento das variáveis para o construtor Veiculo e pré-preenchimento dos campos editáveis**/
         Veiculo v = (Veiculo) getIntent().getSerializableExtra(MainActivity.VEICULO);
@@ -133,6 +135,7 @@ public class EditActivity extends AppCompatActivity {
         textViewSpinnerDialog.setText(v.getMarca());
         textViewSpinnerCountriesDialog = findViewById(R.id.SpinnerCountriesEdit);
         textViewSpinnerCountriesDialog.setText(v.getCountry());
+
         /** Criação do spinner da categoria do veículo **/
         spinnerVehicle = findViewById(R.id.spinnerVehicleEdit);
         spinnerVehicle.setSelection(0);
@@ -156,16 +159,14 @@ public class EditActivity extends AppCompatActivity {
                         break;
                     case 2:
                         category = "Class C";
-                        //MUDAR LISTA
-                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
+                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaTrucks)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_c);
                         pathPhoto = "";
                         break;
                     case 3:
                         category = "Class D";
-                        //MUDAR LISTA
-                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaMotas)));
+                        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.listaBus)));
                         if (!read)
                             imageVehicle.setImageResource(R.drawable.classe_d);
                         pathPhoto = "";
@@ -293,8 +294,10 @@ public class EditActivity extends AppCompatActivity {
         final String model = editText_Model.getText().toString();
         final int color = cor;
 
+        /**
+         * Gravação da imagem localmente
+         */
         if (read) {
-
             File f = new File(this.getFilesDir() + "/" + pathPhoto);
             f.delete();
 
@@ -334,6 +337,9 @@ public class EditActivity extends AppCompatActivity {
          */
         final Veiculo veiculo = new Veiculo(brand, model, licensePlate, pathPhoto, owner, color, category, country);
 
+        /**
+         * Pedido para edit veiculo na base de dados
+         */
         final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, EDIT_USER_URL,
@@ -387,6 +393,9 @@ public class EditActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * Método para alterar o tamanho do bitmap da imagem
+     */
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
@@ -403,6 +412,9 @@ public class EditActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Método para transformar o bitmap em String
+     */
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -467,6 +479,12 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método após a escolha da imagem
+     * @param requestCode Constante que indica o tipo de pedido (Galeria/Tirar Foto)
+     * @param resultCode Resultado do pedido
+     * @param data Dados resultantes do pedido
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
