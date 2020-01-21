@@ -49,7 +49,7 @@ public class SearchActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
 
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
