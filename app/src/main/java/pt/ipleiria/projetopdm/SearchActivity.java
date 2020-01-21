@@ -228,7 +228,9 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Cria listview de cada objeto com a respetiva matrícula e proprietário
+     */
     public void createListView(){
         matriculas.clear();
         for (int i=0;i<gestorVeiculos.getVeiculos().size();i++){
