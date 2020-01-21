@@ -70,6 +70,10 @@ import static pt.ipleiria.projetopdm.Configuration.KEY_MODELO;
 import static pt.ipleiria.projetopdm.Configuration.KEY_POSITION;
 import static pt.ipleiria.projetopdm.Configuration.KEY_PROPRIETARIO;
 
+
+/**
+ * Classe que edita o veículo selecionado
+ */
 public class EditActivity extends AppCompatActivity {
 
 

@@ -28,6 +28,10 @@ import java.util.ArrayList;
 
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 
+
+/**
+ * Classe que procura um determinado veículo tanto pela matrícula como pelo nome do proprietário
+ */
 public class SearchActivity extends AppCompatActivity {
 
     /**

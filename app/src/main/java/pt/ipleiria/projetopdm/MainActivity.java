@@ -50,7 +50,9 @@ import pt.ipleiria.projetopdm.recycler.RecyclerVehiclesAdapter;
 import static pt.ipleiria.projetopdm.Configuration.LIST_USER_URL;
 
 
-
+/**
+ * Classe principal, onde é mostrada a lista total de veículos e dá acesso a outras classes que descendem desta
+ */
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
 

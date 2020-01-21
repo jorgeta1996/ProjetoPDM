@@ -28,6 +28,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import pt.ipleiria.projetopdm.modelo.GestorVeiculos;
 import pt.ipleiria.projetopdm.modelo.Veiculo;
 
+
+/**
+ * Classe que mostra veículo selecionado na SearchActivity
+ */
 public class ViewActivity extends AppCompatActivity {
 
     private TextView txtModel;

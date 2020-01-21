@@ -72,6 +72,10 @@ import static pt.ipleiria.projetopdm.Configuration.KEY_MODELO;
 import static pt.ipleiria.projetopdm.Configuration.KEY_PROPRIETARIO;
 import static pt.ipleiria.projetopdm.Configuration.KEY_COUNTRY;
 
+
+/**
+ * Classe que adiciona novos veículos
+ */
 public class AddActivity extends AppCompatActivity {
 
     /**
